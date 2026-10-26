@@ -3,1875 +3,1212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="GST Invoice" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <title>GST Invoice &amp; Bill Maker • Tax Invoice, Quotation &amp; UPI QR Receipt App</title>
+  <title>GST Invoice, Quotation & Bill Maker</title>
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#1e3a8a" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --subtle: #f8fafc;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-soft: rgba(37, 99, 235, 0.1);
-      --emerald: #059669;
-      --emerald-soft: #ecfdf5;
-      --emerald-border: #a7f3d0;
-      --amber: #d97706;
-      --amber-soft: #fffbeb;
-      --amber-border: #fde68a;
-      --danger: #dc2626;
-      --danger-soft: #fef2f2;
-      --purple: #7c3aed;
-      --purple-soft: #f5f3ff;
-      --shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-      --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.16);
-    }
-
-    body.dark-mode {
-      --bg: #0b1120;
-      --card: #1e293b;
-      --subtle: #0f172a;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: #334155;
-      --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-soft: rgba(59, 130, 246, 0.18);
-      --emerald: #34d399;
-      --emerald-soft: rgba(16, 185, 129, 0.14);
-      --emerald-border: rgba(16, 185, 129, 0.35);
-      --amber: #fbbf24;
-      --amber-soft: rgba(245, 158, 11, 0.14);
-      --amber-border: rgba(245, 158, 11, 0.35);
-      --danger: #f87171;
-      --danger-soft: rgba(239, 68, 68, 0.16);
-      --purple: #a78bfa;
-      --purple-soft: rgba(139, 92, 246, 0.18);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 90px;
-      display: flex;
-      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
     }
-
-    .app-shell {
-      width: 100%;
-      max-width: 680px;
-      padding: 14px;
-    }
-
-    /* Top Header */
-    .topbar {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .brand-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #1e40af, #2563eb);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 16px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
-    }
-
-    .brand-title h1 {
-      font-size: 17px;
-      font-weight: 800;
-      line-height: 1.15;
-    }
-
-    .plan-pill {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-top: 3px;
-      background: var(--amber-soft);
-      color: var(--amber);
-      border: 1px solid var(--amber-border);
-    }
-
-    .plan-pill.pro {
-      background: var(--emerald-soft);
-      color: var(--emerald);
-      border-color: var(--emerald-border);
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .btn-top {
-      height: 36px;
-      padding: 0 11px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--subtle);
-      color: var(--text);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-top.pro-cta {
-      background: linear-gradient(135deg, #d97706, #f59e0b);
-      color: #ffffff;
-      border: none;
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
-    }
-
-    .btn-top.pro-cta.unlocked {
-      background: var(--emerald-soft);
-      color: var(--emerald);
-      border: 1px solid var(--emerald-border);
-      box-shadow: none;
-    }
-
-    /* Scoreboard Hero */
-    .score-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    @media (max-width: 540px) {
-      .score-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .score-card.main-total {
-        grid-column: 1 / -1;
-      }
-    }
-
-    .score-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 13px 15px;
-      box-shadow: var(--shadow);
-    }
-
-    .score-card.main-total {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: #ffffff;
-      border-color: transparent;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .score-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .score-card.main-total .score-label,
-    .score-card.main-total .score-sub {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .score-val {
-      font-size: 22px;
-      font-weight: 900;
-      line-height: 1.15;
-    }
-
-    .score-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .btn-preview-jump {
-      background: #ffffff;
-      color: #1e3a8a;
-      border: none;
-      border-radius: 11px;
-      padding: 9px 13px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    /* 3-Tab Switcher */
-    .nav-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 4px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow);
-    }
-
-    .nav-tab {
-      background: transparent;
-      color: var(--muted);
-      border: none;
-      border-radius: 10px;
-      padding: 10px 6px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .nav-tab.active {
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .tab-pane {
-      display: none;
-    }
-
-    .tab-pane.active {
-      display: block;
-    }
-
-    /* Card Containers */
-    .card-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow);
-    }
-
-    .card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--text);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    @media (max-width: 480px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .field-col {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .field-col.full {
-      grid-column: 1 / -1;
-    }
-
-    .field-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .pro-tag {
-      font-size: 10px;
-      font-weight: 800;
-      padding: 1px 6px;
-      border-radius: 6px;
-      background: var(--amber-soft);
-      color: var(--amber);
-    }
-
-    input, select, textarea {
-      height: 42px;
-      padding: 0 12px;
-      border-radius: 11px;
-      border: 1px solid var(--border);
-      background: var(--subtle);
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-      width: 100%;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary);
-      background: var(--card);
-    }
-
-    /* Quick Preset Chips */
-    .chip-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      scrollbar-width: none;
-    }
-
-    .chip-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .preset-btn {
-      background: var(--subtle);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    /* Line Items List */
-    .line-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .line-card {
-      background: var(--subtle);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 11px 13px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .line-left {
-      min-width: 0;
-    }
-
-    .line-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .line-meta {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .line-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .line-total {
-      font-size: 15px;
-      font-weight: 800;
-    }
-
-    .btn-del-line {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--danger);
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .btn-add-item {
-      height: 42px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 11px;
-      font-size: 14px;
-      font-weight: 800;
-      padding: 0 16px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    /* Inline Edit Hint Bar on Preview Tab */
-    .edit-hint-banner {
-      background: var(--primary-soft);
-      border: 1px dashed var(--primary);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-bottom: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* Editable fields inside Invoice Preview */
-    .editable-spot {
-      border-bottom: 1px dashed #94a3b8;
-      padding: 1px 4px;
+    .editable-field:hover {
+      background-color: #eff6ff;
+      outline: 1px dashed #3b82f6;
       border-radius: 4px;
       cursor: text;
-      transition: background 0.15s, border-color 0.15s;
-      display: inline-block;
-      min-width: 30px;
     }
-
-    .editable-spot:hover,
-    .editable-spot:focus {
-      background: #eff6ff;
-      border-bottom-color: #2563eb;
-      outline: 2px solid rgba(37, 99, 235, 0.25);
+    .editable-field:focus {
+      background-color: #ffffff;
+      outline: 2px solid #2563eb;
+      border-radius: 4px;
+      padding: 2px 4px;
     }
-
-    /* Invoice Printable Sheet (Tab 2) */
-    .invoice-paper {
-      background: #ffffff;
-      color: #0f172a;
-      border: 1px solid #cbd5e1;
-      border-radius: 18px;
-      padding: 24px 20px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow);
+    /* Custom scrollbar for catalog */
+    .catalog-scroll::-webkit-scrollbar {
+      width: 6px;
     }
-
-    .inv-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      padding-bottom: 16px;
-      border-bottom: 2px solid #e2e8f0;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .inv-biz-wrap {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .inv-logo-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: #1e3a8a;
-      color: #ffffff;
-      font-weight: 900;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      text-align: center;
-      cursor: text;
-    }
-
-    .inv-doc-badge {
-      font-size: 20px;
-      font-weight: 900;
-      color: #1e3a8a;
-      text-transform: uppercase;
-      text-align: right;
-    }
-
-    .inv-meta-sub {
-      font-size: 12px;
-      color: #475569;
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    .inv-parties {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-      font-size: 13px;
-    }
-
-    .inv-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 16px;
-      font-size: 13px;
-    }
-
-    .inv-table th {
+    .catalog-scroll::-webkit-scrollbar-track {
       background: #f1f5f9;
-      color: #334155;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 9px 8px;
-      text-align: left;
-      border-bottom: 1px solid #cbd5e1;
+      border-radius: 6px;
     }
-
-    .inv-table td {
-      padding: 10px 8px;
-      border-bottom: 1px solid #e2e8f0;
-      color: #0f172a;
+    .catalog-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 6px;
     }
-
-    .inv-table th.num,
-    .inv-table td.num {
-      text-align: right;
+    .catalog-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
     }
-
-    .inv-summary-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      padding-top: 8px;
-    }
-
-    .upi-qr-box {
-      background: #f8fafc;
-      border: 1px dashed #94a3b8;
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      max-width: 300px;
-    }
-
-    .qr-svg-wrap {
-      width: 78px;
-      height: 78px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 4px;
-      flex-shrink: 0;
-    }
-
-    .totals-box {
-      min-width: 210px;
-      margin-left: auto;
-    }
-
-    .tot-line {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: #475569;
-      padding: 4px 0;
-    }
-
-    .tot-line.grand {
-      font-size: 17px;
-      font-weight: 900;
-      color: #0f172a;
-      border-top: 2px solid #0f172a;
-      margin-top: 6px;
-      padding-top: 8px;
-    }
-
-    .inv-watermark {
-      margin-top: 18px;
-      padding-top: 12px;
-      border-top: 1px dashed #cbd5e1;
-      text-align: center;
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    @media (max-width: 500px) {
-      .action-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .btn-action {
-      height: 44px;
-      border-radius: 12px;
-      border: none;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .btn-action.pdf {
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .btn-action.wa {
-      background: #16a34a;
-      color: #ffffff;
-    }
-
-    .btn-action.save {
-      background: var(--subtle);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    /* Sticky Bottom Bar */
-    .sticky-footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      padding: 10px 14px;
-      display: flex;
-      justify-content: center;
-      z-index: 40;
-    }
-
-    .sticky-inner {
-      width: 100%;
-      max-width: 652px;
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-sticky-main {
-      flex: 1;
-      height: 44px;
-      border-radius: 12px;
-      border: none;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .btn-sticky-sec {
-      height: 44px;
-      padding: 0 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--subtle);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* Modal Backdrop (Pro Unlock & Key Generator) */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      z-index: 80;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow-lg);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .seller-box {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 14px;
-      background: var(--purple-soft);
-      border: 1px dashed var(--purple);
-      font-size: 13px;
-    }
-
-    .toast-bar {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-140%);
-      background: #0f172a;
-      color: #ffffff;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      z-index: 120;
-      transition: transform 0.25s ease;
-    }
-
-    .toast-bar.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
     @media print {
-      body {
-        background: #ffffff !important;
-        padding: 0 !important;
+      body * {
+        visibility: hidden;
       }
-      .topbar,
-      .score-grid,
-      .nav-tabs,
-      .action-grid,
-      .sticky-footer,
-      .edit-hint-banner,
-      #paneCreate,
-      #paneHistory {
-        display: none !important;
+      #printableArea, #printableArea * {
+        visibility: visible;
       }
-      #panePreview {
-        display: block !important;
-      }
-      .invoice-paper {
-        border: none !important;
+      #printableArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
         box-shadow: none !important;
-        padding: 0 !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 16px !important;
       }
-      .editable-spot {
-        border-bottom: none !important;
-        padding: 0 !important;
-        outline: none !important;
-        background: transparent !important;
+      .no-print {
+        display: none !important;
       }
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen pb-16">
 
-  <div class="toast-bar" id="toastBar">Saved!</div>
-
-  <div class="app-shell">
-    <!-- Top Header -->
-    <div class="topbar">
-      <div class="brand-left">
-        <div class="brand-icon" id="brandIcon">GST</div>
-        <div class="brand-title">
-          <h1>GST Invoice, Quotation &amp; Bill Maker</h1>
-          <div style="font-size:11px; color:var(--muted); font-weight:600; margin-top:1px;">Invoice &bull; Quotation &bull; UPI QR Receipt</div>
-          <span class="plan-pill" id="planPill">FREE EDITION</span>
+  <!-- TOP HEADER -->
+  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-30 no-print">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-400 text-blue-950 font-extrabold flex items-center justify-center text-sm shadow-inner shrink-0">
+          GST
         </div>
-      </div>
-      <div class="top-actions">
-        <button class="btn-top pro-cta" id="proBtn" onclick="openProModal()">Unlock Pro (&#8377;299 / $9)</button>
-        <select id="curSelect" class="btn-top" onchange="setCurrency(this.value)">
-          <option value="INR">&#8377; INR</option>
-          <option value="USD">$ USD</option>
-          <option value="EUR">&euro; EUR</option>
-          <option value="BDT">&#2547; BDT</option>
-          <option value="GBP">&pound; GBP</option>
-        </select>
-        <button class="btn-top" id="darkBtn" onclick="toggleTheme()">Dark</button>
-      </div>
-    </div>
-
-    <!-- Live Invoice Scoreboard -->
-    <div class="score-grid">
-      <div class="score-card main-total">
         <div>
-          <div class="score-label" id="docTypeLabel">Current Invoice Total</div>
-          <div class="score-val" id="heroGrandTotal">&#8377;0</div>
-          <div class="score-sub" id="heroSubNote">0 items &bull; Tax included</div>
+          <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight">GST Invoice, Quotation & Bill Maker</h1>
+          <p class="text-[11px] text-blue-200 font-medium">Invoice • Quotation • UPI QR Receipt</p>
         </div>
-        <button class="btn-preview-jump" onclick="switchPane('preview')">View / Share Bill &rarr;</button>
       </div>
-      <div class="score-card">
-        <div class="score-label">Paid Collected</div>
-        <div class="score-val" style="color:var(--emerald);" id="paidTotalStat">&#8377;0</div>
-        <div class="score-sub" id="paidCountStat">0 paid bills</div>
-      </div>
-      <div class="score-card">
-        <div class="score-label">Pending Dues</div>
-        <div class="score-val" style="color:var(--amber);" id="pendingTotalStat">&#8377;0</div>
-        <div class="score-sub" id="pendingCountStat">0 pending</div>
+
+      <div class="flex items-center gap-2">
+        <span id="proStatusBadge" class="hidden bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
+          ★ PRO UNLOCKED
+        </span>
+        <button id="openProModalBtn" type="button" onclick="openProModal()" class="bg-amber-400 hover:bg-amber-300 text-blue-950 font-extrabold text-xs sm:text-sm px-3 py-2 rounded-lg shadow transition flex items-center gap-1 shrink-0">
+          <span>👑 Unlock Pro (₹299)</span>
+        </button>
       </div>
     </div>
 
-    <!-- 3-Tab Navigation -->
-    <div class="nav-tabs">
-      <button class="nav-tab active" id="tabCreate" onclick="switchPane('create')">1. Edit Bill</button>
-      <button class="nav-tab" id="tabPreview" onclick="switchPane('preview')">2. Preview &amp; PDF</button>
-      <button class="nav-tab" id="tabHistory" onclick="switchPane('history')">3. History &amp; Setup</button>
+    <!-- NAVIGATION TABS -->
+    <div class="max-w-4xl mx-auto px-4 flex border-t border-blue-800/80 bg-blue-950/40 text-xs sm:text-sm font-semibold">
+      <button type="button" id="tabBtnEdit" onclick="switchTab('edit')" class="flex-1 py-2.5 text-center border-b-2 border-amber-400 text-amber-300">
+        1. Edit Bill
+      </button>
+      <button type="button" id="tabBtnPreview" onclick="switchTab('preview')" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-blue-200 hover:text-white">
+        2. Preview & PDF
+      </button>
+      <button type="button" id="tabBtnHistory" onclick="switchTab('history')" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-blue-200 hover:text-white">
+        3. Saved Bills (<span id="savedCountBadge">0</span>)
+      </button>
     </div>
+  </header>
 
-    <!-- PANE 1: CREATE / EDIT INVOICE -->
-    <div class="tab-pane active" id="paneCreate">
-      <!-- Editable Seller / Business Header Details Card right at the top of Tab 1 -->
-      <div class="card-box">
-        <div class="card-head">
-          <span class="card-title">Your Business / Shop Details (Bill Header)</span>
-          <button type="button" class="preset-btn" onclick="resetBizToBlank()">Clear to Blank</button>
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl mx-auto px-3 sm:px-4 pt-4">
+
+    <!-- ================= TAB 1: EDIT BILL ================= -->
+    <section id="tabEdit" class="space-y-4">
+
+      <!-- BUSINESS / SHOP HEADER DETAILS -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h2 class="font-bold text-slate-800 text-sm sm:text-base">🏪 Your Business / Shop Details (Bill Header)</h2>
+            <p class="text-xs text-slate-500">Anyone using this app can put their own shop name, phone & address here.</p>
+          </div>
+          <button type="button" onclick="clearBusinessHeader()" class="text-xs font-semibold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-md transition">
+            Clear to Blank
+          </button>
         </div>
-        <div class="form-grid">
-          <div class="field-col">
-            <label class="field-label" for="bizNameMain">Your Business / Shop Name</label>
-            <input type="text" id="bizNameMain" placeholder="e.g., Sharma Electronics / Your Name" oninput="syncBizFromMain()" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Logo Short Text (2-4 letters)</label>
+            <input type="text" id="bizLogoInput" maxlength="5" placeholder="e.g. RD&" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none font-bold" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="bizLogoMain">Logo Badge Letters (2-3 Chars)</label>
-            <input type="text" id="bizLogoMain" maxlength="4" placeholder="e.g., SE or GST" oninput="syncBizFromMain()" />
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Business / Shop Name</label>
+            <input type="text" id="bizNameInput" placeholder="e.g. Rehan Digital & Trading" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none font-semibold" />
           </div>
-          <div class="field-col full">
-            <label class="field-label" for="bizPhoneMain">Your Phone &bull; City / Address</label>
-            <input type="text" id="bizPhoneMain" placeholder="e.g., +91 98000 00000 • Kolkata, West Bengal" oninput="syncBizFromMain()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Phone & City / Address</label>
+            <input type="text" id="bizAddressInput" placeholder="+91 98000 00000 • West Bengal, India" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="bizUpiMain">
-              <span>Your UPI ID (for QR Code)</span>
-              <span class="pro-tag">PRO</span>
-            </label>
-            <input type="text" id="bizUpiMain" placeholder="e.g., yourname@okaxis" oninput="syncBizFromMain()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Your GSTIN (Optional)</label>
+            <input type="text" id="bizGstinInput" placeholder="e.g. 19ABCDE1234F1Z5" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="bizGstMain">
-              <span>Your GSTIN / Tax ID (Optional)</span>
-              <span class="pro-tag">PRO</span>
-            </label>
-            <input type="text" id="bizGstMain" placeholder="e.g., 19ABCDE1234F1Z5" oninput="syncBizFromMain()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Your UPI ID (For Customer QR)</label>
+            <input type="text" id="bizUpiInput" placeholder="e.g. shopname@ybl" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
         </div>
       </div>
 
-      <!-- Editable Invoice Header & Customer Details Card -->
-      <div class="card-box">
-        <div class="card-head">
-          <span class="card-title">Invoice Header &amp; Customer Details</span>
-          <button class="preset-btn" onclick="loadSampleInvoice()">Load Sample Bill</button>
-        </div>
-        <div class="form-grid">
-          <div class="field-col">
-            <label class="field-label" for="docType">Document Title</label>
-            <select id="docType" onchange="renderAll()">
+      <!-- INVOICE & CUSTOMER INFO -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <h2 class="font-bold text-slate-800 text-sm sm:text-base mb-3">📄 Document & Customer Details</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Document Type</label>
+            <select id="docTitleInput" onchange="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none">
               <option value="TAX INVOICE">TAX INVOICE</option>
               <option value="INVOICE">INVOICE</option>
               <option value="QUOTATION / ESTIMATE">QUOTATION / ESTIMATE</option>
-              <option value="PAYMENT RECEIPT">PAYMENT RECEIPT</option>
-              <option value="CASH MEMO / BILL">CASH MEMO / BILL</option>
+              <option value="PROFORMA INVOICE">PROFORMA INVOICE</option>
+              <option value="CASH MEMO / RECEIPT">CASH MEMO / RECEIPT</option>
             </select>
           </div>
-          <div class="field-col">
-            <label class="field-label" for="invNumber">Invoice / Bill Number (#)</label>
-            <input type="text" id="invNumber" value="INV-101" placeholder="e.g., INV-101" oninput="renderAll()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Invoice / Bill No.</label>
+            <input type="text" id="invNumberInput" placeholder="INV-101" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="invDate">Invoice Date</label>
-            <input type="text" id="invDate" placeholder="e.g., 19/10/2026" oninput="renderAll()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Invoice Date (DD/MM/YYYY)</label>
+            <input type="text" id="invDateInput" placeholder="26/10/2026" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="clientName">Customer / Client Name</label>
-            <input type="text" id="clientName" placeholder="e.g., Rahul Traders / Walk-in" oninput="renderAll()" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Customer / Client Name</label>
+            <input type="text" id="custNameInput" placeholder="Walk-in Customer / Rahul Sharma" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
-          <div class="field-col full">
-            <label class="field-label" for="clientPhone">Customer WhatsApp / Phone / Address</label>
-            <input type="text" id="clientPhone" placeholder="e.g., +91 9876543210 • Market Road" oninput="renderAll()" />
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Customer WhatsApp / Phone</label>
+            <input type="tel" id="custPhoneInput" placeholder="e.g. 9876543210" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Customer Address / GSTIN</label>
+            <input type="text" id="custAddressInput" placeholder="Kolkata, WB" oninput="syncFormToState()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none" />
           </div>
         </div>
       </div>
 
-      <!-- Add Line Item Card -->
-      <div class="card-box">
-        <div class="card-head">
-          <span class="card-title">Add Products or Services</span>
+      <!-- ADD PRODUCTS OR SERVICES (WITH 100 BUILT-IN SCROLLABLE ITEMS) -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div>
+            <h2 class="font-bold text-slate-800 text-sm sm:text-base">🛒 Add Products or Services</h2>
+            <p class="text-xs text-slate-500">Scroll and tap any built-in item below, or type your own item name to auto-match.</p>
+          </div>
+          <span id="matchStatusBadge" class="hidden text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full border border-emerald-300">
+            ✓ Built-In Service/Item Matches Highlighted!
+          </span>
         </div>
 
-        <div class="chip-bar">
-          <button type="button" class="preset-btn" onclick="fillItemPreset('Website Design & Setup', 5000, 18)">+ Website Design</button>
-          <button type="button" class="preset-btn" onclick="fillItemPreset('Monthly Tuition / Coaching', 1500, 0)">+ Monthly Coaching</button>
-          <button type="button" class="preset-btn" onclick="fillItemPreset('Social Media Marketing', 3500, 18)">+ Marketing Package</button>
-          <button type="button" class="preset-btn" onclick="fillItemPreset('Hardware / Repair Service', 850, 12)">+ Repair Service</button>
-          <button type="button" class="preset-btn" onclick="fillItemPreset('Custom Cake / Catering Order', 1200, 5)">+ Food / Bakery Order</button>
+        <!-- Category Filter Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2 text-xs">
+          <button type="button" onclick="filterCatalogCategory('ALL')" id="catBtn_ALL" class="px-2.5 py-1 rounded-full font-bold bg-blue-900 text-white shrink-0">All (100)</button>
+          <button type="button" onclick="filterCatalogCategory('Grocery')" id="catBtn_Grocery" class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">🌾 Grocery & Kirana</button>
+          <button type="button" onclick="filterCatalogCategory('Food')" id="catBtn_Food" class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">🍛 Food & Bakery</button>
+          <button type="button" onclick="filterCatalogCategory('Services')" id="catBtn_Services" class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">🔧 Repair & Services</button>
+          <button type="button" onclick="filterCatalogCategory('Digital')" id="catBtn_Digital" class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">💻 Digital & Coaching</button>
+          <button type="button" onclick="filterCatalogCategory('Retail')" id="catBtn_Retail" class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">📦 Electronics & Retail</button>
         </div>
 
-        <div class="form-grid">
-          <div class="field-col full">
-            <label class="field-label" for="itemDesc">Item / Service Description</label>
-            <input type="text" id="itemDesc" placeholder="e.g., Logo Design, 5kg Basmati Rice, AC Service" />
+        <!-- Scrollable 100-item Quick Catalog Box -->
+        <div id="catalogScrollBox" class="catalog-scroll max-h-40 overflow-y-auto border border-slate-200 bg-slate-50 rounded-lg p-2 mb-4 flex flex-wrap gap-1.5">
+          <!-- Dynamically populated by renderCatalogChips() -->
+        </div>
+
+        <!-- Item Entry Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end bg-blue-50/60 p-3 rounded-xl border border-blue-100">
+          <div class="sm:col-span-4">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Item / Service Description</label>
+            <input type="text" id="itemNameInput" placeholder="Type e.g. Basmati Rice, Biryani, AC..." oninput="handleItemNameTyping(this.value)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="itemQty">Quantity</label>
-            <input type="number" id="itemQty" value="1" min="1" step="any" />
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Quantity</label>
+            <input type="number" id="itemQtyInput" value="1" min="0.01" step="any" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none font-semibold" />
           </div>
-          <div class="field-col">
-            <label class="field-label" for="itemPrice">Unit Price</label>
-            <input type="number" id="itemPrice" placeholder="0.00" min="0.01" step="any" />
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Unit</label>
+            <select id="itemUnitInput" class="w-full border border-slate-300 rounded-lg px-2.5 py-2 text-sm bg-white font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="pcs">Pieces (pcs)</option>
+              <option value="kg">Kilogram (kg)</option>
+              <option value="gm">Gram (gm)</option>
+              <option value="ltr">Litre (ltr)</option>
+              <option value="ml">Millilitre (ml)</option>
+              <option value="pkt">Packet (pkt)</option>
+              <option value="plate">Plate / Dish</option>
+              <option value="box">Box / Carton</option>
+              <option value="doz">Dozen (doz)</option>
+              <option value="mtr">Meter (mtr)</option>
+              <option value="hrs">Hours (hrs)</option>
+              <option value="days">Days</option>
+              <option value="service">Service / Job</option>
+              <option value="month">Month</option>
+            </select>
           </div>
-          <div class="field-col">
-            <label class="field-label" for="itemTax">GST / Tax Rate</label>
-            <select id="itemTax">
-              <option value="0">0% (No Tax / Exempt)</option>
-              <option value="5">5% GST / Tax</option>
-              <option value="12">12% GST / Tax</option>
-              <option value="18" selected>18% GST / Standard</option>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Unit Price (₹)</label>
+            <input type="number" id="itemPriceInput" placeholder="0.00" min="0" step="any" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none font-semibold" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-slate-700 mb-1">GST %</label>
+            <select id="itemGstInput" class="w-full border border-slate-300 rounded-lg px-2.5 py-2 text-sm bg-white font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="0">0% (No GST)</option>
+              <option value="5">5% GST</option>
+              <option value="12">12% GST</option>
+              <option value="18" selected>18% GST</option>
               <option value="28">28% GST</option>
             </select>
           </div>
-          <div class="field-col">
-            <label class="field-label" for="invDiscount">Overall Discount (%)</label>
-            <input type="number" id="invDiscount" value="0" min="0" max="90" step="any" oninput="renderAll()" />
+
+          <div class="sm:col-span-12 flex justify-end pt-1">
+            <button type="button" onclick="addItemFromForm()" class="w-full sm:w-auto bg-blue-800 hover:bg-blue-900 text-white font-bold text-sm px-6 py-2.5 rounded-lg shadow transition flex items-center justify-center gap-1.5">
+              <span>＋ Add Item to Bill</span>
+            </button>
           </div>
         </div>
 
-        <button class="btn-add-item" onclick="addLineItem()">+ Add Item to Bill</button>
+        <!-- CURRENT BILL ITEMS LIST -->
+        <div class="mt-4">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Items in Current Bill</h3>
+            <button type="button" onclick="clearAllItems()" class="text-xs text-red-600 hover:underline font-medium">Remove All Items</button>
+          </div>
+          <div id="editItemsList" class="space-y-2"></div>
+        </div>
 
-        <div class="line-list" id="lineItemsContainer"></div>
+        <!-- TOTAL SUMMARY BAR -->
+        <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3 rounded-lg">
+          <div class="text-xs sm:text-sm space-y-0.5">
+            <div>Subtotal: <strong id="editSubtotalText">₹0.00</strong> | Total GST: <strong id="editGstText">₹0.00</strong></div>
+            <div class="text-base sm:text-lg font-extrabold text-blue-900">Grand Total: <span id="editGrandTotalText">₹0.00</span></div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" onclick="saveCurrentBill()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-lg shadow transition">
+              💾 Save Bill
+            </button>
+            <button type="button" onclick="switchTab('preview')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-lg shadow transition">
+              👁️ View Invoice & Print PDF →
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- PANE 2: LIVE INVOICE PREVIEW, PDF PRINT & WHATSAPP SHARE -->
-    <div class="tab-pane" id="panePreview">
-      <div class="edit-hint-banner">
-        <span>&#9998; <strong>Click any text on the bill header below</strong> (Logo, Shop Name, Phone, Invoice #, Date, or Customer) to edit it directly!</span>
-        <button type="button" class="preset-btn" onclick="switchPane('create')">Edit in Form</button>
+    <!-- ================= TAB 2: PREVIEW & PDF ================= -->
+    <section id="tabPreview" class="hidden space-y-4">
+
+      <!-- Action Bar -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 flex flex-wrap items-center justify-between gap-2 no-print">
+        <div class="text-xs text-slate-600 font-medium">
+          💡 <strong>Tip:</strong> Tap directly on any heading, name, or date on the bill paper below to edit it live!
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="switchTab('edit')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-2 rounded-lg">
+            ← Edit Items
+          </button>
+          <button type="button" onclick="shareOnWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow flex items-center gap-1">
+            <span>📲 WhatsApp Bill</span>
+          </button>
+          <button type="button" onclick="window.print()" class="bg-blue-800 hover:bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded-lg shadow flex items-center gap-1">
+            <span>🖨️ Print / Save PDF</span>
+          </button>
+        </div>
       </div>
 
-      <div class="invoice-paper" id="printableInvoice">
-        <div class="inv-top">
-          <div class="inv-biz-wrap">
-            <div class="inv-logo-box editable-spot" id="previewLogo" contenteditable="true" title="Click to edit logo initials" onblur="syncFromInlinePreview()">BIZ</div>
+      <!-- PRINTABLE A4 INVOICE PAPER -->
+      <div id="printableArea" class="bg-white rounded-xl shadow-md border border-slate-200 p-6 sm:p-8 max-w-3xl mx-auto">
+
+        <!-- Invoice Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-800 pb-4 gap-4">
+          <div class="flex items-start gap-3">
+            <div id="prevBizLogo" contenteditable="true" onblur="syncPreviewToState()" class="editable-field w-14 h-14 rounded-xl bg-blue-900 text-white font-extrabold text-lg flex items-center justify-center shrink-0">
+              RD&
+            </div>
             <div>
-              <div style="font-size:18px; font-weight:900;" class="editable-spot" id="previewBizName" contenteditable="true" title="Click to edit your business name" onblur="syncFromInlinePreview()">Your Business Name</div>
-              <div style="margin-top:3px;">
-                <span style="font-size:12px; color:#475569;" class="editable-spot" id="previewBizSub" contenteditable="true" title="Click to edit your phone and address" onblur="syncFromInlinePreview()">+91 98000 00000 &bull; Your City, India</span>
-              </div>
-              <div style="font-size:11px; font-weight:700; color:#1e3a8a; margin-top:3px;" id="previewBizTax"></div>
+              <h2 id="prevBizName" contenteditable="true" onblur="syncPreviewToState()" class="editable-field text-xl font-extrabold text-slate-900 leading-tight">
+                Rehan Digital & Trading
+              </h2>
+              <p id="prevBizAddress" contenteditable="true" onblur="syncPreviewToState()" class="editable-field text-xs text-slate-600 mt-0.5">
+                +91 98000 00000 • West Bengal, India
+              </p>
+              <p id="prevBizGstinLine" class="text-xs font-bold text-slate-700 mt-1 hidden">
+                GSTIN: <span id="prevBizGstin"></span>
+              </p>
             </div>
           </div>
-          <div style="text-align:right;">
-            <div class="inv-doc-badge editable-spot" id="previewDocTitle" contenteditable="true" title="Click to edit document title" onblur="syncFromInlinePreview()">TAX INVOICE</div>
-            <div class="inv-meta-sub">
-              #<span class="editable-spot" id="previewInvNo" contenteditable="true" title="Click to edit invoice number" onblur="syncFromInlinePreview()">INV-101</span>
+
+          <div class=" sm:text-right">
+            <div id="prevDocTitle" contenteditable="true" onblur="syncPreviewToState()" class="editable-field inline-block bg-slate-900 text-white text-xs font-extrabold px-3 py-1 rounded uppercase tracking-wider">
+              TAX INVOICE
             </div>
-            <div class="inv-meta-sub">
-              Date: <span class="editable-spot" id="previewDate" contenteditable="true" title="Click to edit invoice date" onblur="syncFromInlinePreview()">19/10/2026</span>
+            <div class="mt-2 text-sm font-bold text-slate-800">
+              #<span id="prevInvNumber" contenteditable="true" onblur="syncPreviewToState()" class="editable-field">INV-101</span>
+            </div>
+            <div class="text-xs text-slate-500">
+              Date: <span id="prevInvDate" contenteditable="true" onblur="syncPreviewToState()" class="editable-field">26/10/2026</span>
             </div>
           </div>
         </div>
 
-        <div class="inv-parties">
+        <!-- Bill To Section -->
+        <div class="py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between gap-2 text-xs">
           <div>
-            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase;">Billed To (Customer):</div>
-            <div style="font-size:15px; font-weight:800; margin-top:2px;" class="editable-spot" id="previewClientName" contenteditable="true" title="Click to edit customer name" onblur="syncFromInlinePreview()">Walk-in Customer</div>
-            <div style="margin-top:2px;">
-              <span style="font-size:12px; color:#475569;" class="editable-spot" id="previewClientPhone" contenteditable="true" title="Click to edit customer phone/address" onblur="syncFromInlinePreview()">+91 98765 43210</span>
+            <span class="font-bold text-slate-400 uppercase tracking-wider block">Billed To:</span>
+            <div id="prevCustName" contenteditable="true" onblur="syncPreviewToState()" class="editable-field text-sm font-bold text-slate-800 mt-0.5">
+              Walk-in Customer
             </div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase;">Payment Mode:</div>
-            <div style="font-size:13px; font-weight:700; color:#059669; margin-top:2px;" class="editable-spot" id="previewPayLabel" contenteditable="true">Instant UPI / Cash / Bank</div>
+            <div id="prevCustPhone" class="text-slate-600"></div>
+            <div id="prevCustAddress" class="text-slate-600"></div>
           </div>
         </div>
 
-        <table class="inv-table">
-          <thead>
-            <tr>
-              <th>Item Description</th>
-              <th class="num">Qty</th>
-              <th class="num">Rate</th>
-              <th class="num">Tax</th>
-              <th class="num">Total</th>
-            </tr>
-          </thead>
-          <tbody id="previewTableBody"></tbody>
-        </table>
+        <!-- Invoice Items Table (With Unit Price) -->
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b-2 border-slate-800 text-xs font-extrabold text-slate-700 uppercase bg-slate-50">
+                <th class="py-2.5 px-2">#</th>
+                <th class="py-2.5 px-2">Item / Service Description</th>
+                <th class="py-2.5 px-2 text-center">Qty</th>
+                <th class="py-2.5 px-2 text-right">Unit Price</th>
+                <th class="py-2.5 px-2 text-right">GST</th>
+                <th class="py-2.5 px-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="previewTableBody" class="divide-y divide-slate-200 text-xs sm:text-sm">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
 
-        <div class="inv-summary-row">
-          <!-- Dynamic UPI QR Code Box -->
-          <div class="upi-qr-box" id="upiQrContainer">
-            <div class="qr-svg-wrap" id="qrSvgHolder"></div>
-            <div>
-              <div style="font-size:12px; font-weight:800; color:#0f172a;" id="qrHeaderLabel">Scan to Pay via UPI</div>
-              <div style="font-size:11px; color:#475569; margin-top:2px;" id="qrUpiText">Set your UPI ID in Edit Bill tab</div>
-              <button class="preset-btn" style="margin-top:6px; font-size:11px; padding:4px 8px;" id="qrProLockBtn" onclick="openProModal()">Unlock Pro QR</button>
+        <!-- Totals & QR Footer -->
+        <div class="mt-6 pt-4 border-t-2 border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+          <!-- Customer UPI QR Box -->
+          <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <img id="custUpiQrImg" src="" alt="UPI QR" class="w-20 h-20 rounded bg-white p-1 border border-slate-200 hidden" />
+            <div class="text-xs">
+              <div class="font-bold text-slate-800">Scan & Pay via Any UPI App</div>
+              <div id="prevUpiIdText" class="text-slate-600 mt-0.5">Add your UPI ID in Tab 1 to display QR</div>
+              <div class="text-[11px] text-slate-400 mt-1">Thank you for your business!</div>
             </div>
           </div>
 
-          <div class="totals-box">
-            <div class="tot-line">
-              <span>Subtotal:</span>
-              <span id="previewSubtotal">&#8377;0</span>
+          <!-- Calculation Summary -->
+          <div class="space-y-1.5 text-xs sm:text-sm">
+            <div class="flex justify-between text-slate-600">
+              <span>Taxable Subtotal:</span>
+              <span id="prevSubtotal" class="font-semibold">₹0.00</span>
             </div>
-            <div class="tot-line" id="previewDiscRow">
-              <span>Discount:</span>
-              <span id="previewDiscount">-&#8377;0</span>
+            <div class="flex justify-between text-slate-600">
+              <span>CGST (50% of GST):</span>
+              <span id="prevCgst" class="font-semibold">₹0.00</span>
             </div>
-            <div class="tot-line" id="previewTaxRow">
-              <span id="previewTaxLabel">GST / Tax:</span>
-              <span id="previewTaxAmt">&#8377;0</span>
+            <div class="flex justify-between text-slate-600">
+              <span>SGST (50% of GST):</span>
+              <span id="prevSgst" class="font-semibold">₹0.00</span>
             </div>
-            <div class="tot-line grand">
+            <div class="flex justify-between text-base sm:text-lg font-extrabold text-slate-900 border-t border-slate-300 pt-2">
               <span>Grand Total:</span>
-              <span id="previewGrandTotal">&#8377;0</span>
+              <span id="prevGrandTotal">₹0.00</span>
             </div>
           </div>
         </div>
 
-        <div class="inv-watermark" id="previewWatermark">
-          Created with <strong>GST Invoice &amp; Bill Maker</strong> &bull; <button type="button" onclick="openProModal()" style="background:none; border:none; padding:0; color:#2563eb; font-weight:700; font-size:12px; cursor:pointer;">Upgrade to Pro</button> to remove watermark &amp; enable custom GST + UPI QR
+        <!-- Free Tier Watermark Footer -->
+        <div id="invoiceWatermark" class="mt-8 pt-3 border-t border-dashed border-slate-200 text-center text-[11px] text-slate-400 font-medium">
+          Created with <strong>GST Invoice, Quotation & Bill Maker</strong> • Unlock Pro (₹299) to remove watermark
         </div>
       </div>
+    </section>
 
-      <div class="action-grid">
-        <button class="btn-action pdf" onclick="window.print()">Print / Save PDF</button>
-        <button class="btn-action wa" onclick="shareOnWhatsApp()">Send on WhatsApp</button>
-        <button class="btn-action save" onclick="saveCurrentInvoice()">Save to History</button>
-      </div>
-    </div>
-
-    <!-- PANE 3: INVOICE HISTORY & MY BUSINESS SETUP -->
-    <div class="tab-pane" id="paneHistory">
-      <div class="card-box">
-        <div class="card-head">
-          <span class="card-title">My Business Profile &amp; UPI Setup</span>
-          <span class="pro-tag" id="setupProTag">AUTO-SAVED ON PHONE</span>
-        </div>
-        <div class="form-grid">
-          <div class="field-col">
-            <label class="field-label" for="bizNameInput">Your Business / Freelancer Name</label>
-            <input type="text" id="bizNameInput" placeholder="e.g., Sharma Electronics" oninput="saveBusinessProfileFromSetup()" />
+    <!-- ================= TAB 3: SAVED BILLS HISTORY ================= -->
+    <section id="tabHistory" class="hidden space-y-4">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="font-bold text-slate-800 text-sm sm:text-base">🗂️ Saved Invoices & Bills</h2>
+            <p class="text-xs text-slate-500">Stored safely offline on your device.</p>
           </div>
-          <div class="field-col">
-            <label class="field-label" for="bizLogoInput">Logo Badge Letters (2-3 Chars)</label>
-            <input type="text" id="bizLogoInput" maxlength="4" placeholder="e.g., SE or GST" oninput="saveBusinessProfileFromSetup()" />
-          </div>
-          <div class="field-col full">
-            <label class="field-label" for="bizPhoneInput">Your Phone / City / Address</label>
-            <input type="text" id="bizPhoneInput" placeholder="e.g., +91 9800000000 • Kolkata" oninput="saveBusinessProfileFromSetup()" />
-          </div>
-          <div class="field-col">
-            <label class="field-label" for="bizUpiInput">
-              <span>Your UPI ID for Instant QR</span>
-              <span class="pro-tag">PRO</span>
-            </label>
-            <input type="text" id="bizUpiInput" placeholder="e.g., merchant@okaxis" oninput="saveBusinessProfileFromSetup()" />
-          </div>
-          <div class="field-col">
-            <label class="field-label" for="bizGstInput">
-              <span>GSTIN / Tax Registration #</span>
-              <span class="pro-tag">PRO</span>
-            </label>
-            <input type="text" id="bizGstInput" placeholder="e.g., 19ABCDE1234F1Z5" oninput="saveBusinessProfileFromSetup()" />
-          </div>
+          <button type="button" onclick="exportSavedBillsCsv()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow">
+            📊 Export Excel CSV
+          </button>
         </div>
+        <div id="savedBillsContainer" class="space-y-2 text-xs sm:text-sm"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= PRO UNLOCK & AUTOMATIC UPI PASS KEY MODAL ================= -->
+  <div id="proModal" class="fixed inset-0 bg-slate-900/75 z-50 hidden items-center justify-center p-3 overflow-y-auto no-print">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200 my-8">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <span class="bg-amber-400 text-blue-950 text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">Lifetime Pro Edition</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Unlock GST Invoice Pro (₹299)</h3>
+        </div>
+        <button type="button" onclick="closeProModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">✕</button>
       </div>
 
-      <div class="card-box">
-        <div class="card-head">
-          <span class="card-title">Saved Invoices History</span>
-          <button class="preset-btn" onclick="exportHistoryCSV()">Export CSV</button>
-        </div>
-        <div class="line-list" id="historyListContainer"></div>
-      </div>
-    </div>
-  </div>
+      <div class="mt-3 space-y-3 text-xs text-slate-600">
+        <ul class="space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200 font-medium text-slate-700">
+          <li>✅ Remove "Created with GST Invoice Maker" watermark from PDFs & WhatsApp</li>
+          <li>✅ Unlimited Saved Invoices & 1-Click Excel CSV Tax Report</li>
+          <li>✅ Custom Business GSTIN & Automatic UPI Payment QR on Every Bill</li>
+        </ul>
 
-  <!-- Sticky Bottom Bar -->
-  <div class="sticky-footer">
-    <div class="sticky-inner">
-      <button class="btn-sticky-main" onclick="switchPane('preview')">Preview PDF &amp; WhatsApp Bill</button>
-      <button class="btn-sticky-sec" onclick="saveCurrentInvoice()">Save Bill</button>
-      <button class="btn-sticky-sec" onclick="clearCurrentBill()">New</button>
-    </div>
-  </div>
-
-  <!-- PRO UPGRADE & SELLER LICENSE KEY GENERATOR MODAL -->
-  <div class="modal-backdrop" id="proModal" onclick="handleModalBackdrop(event)">
-    <div class="modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <span style="font-size:18px; font-weight:900;">GST Invoice &amp; Bill Maker Pro • Unlock</span>
-        <button class="btn-top" onclick="closeProModal()">Close</button>
-      </div>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">
-        Upgrade once to unlock <strong>Dynamic UPI Payment QR Codes</strong>, <strong>Official GSTIN / Tax Headers</strong>, <strong>Custom Business Branding</strong>, and <strong>No Watermark</strong> on all PDFs.
-      </p>
-
-      <div style="background:var(--subtle); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px;">
-        <div style="font-size:12px; font-weight:800; color:var(--muted); margin-bottom:6px;">STEP 1: GET YOUR LIFETIME LICENSE KEY (&#8377;299 / $9)</div>
-        <a id="buyCheckoutLink" href="https://razorpay.com/payment-pages/" target="_blank" rel="noopener" style="display:block; text-align:center; background:var(--primary); color:#ffffff; text-decoration:none; font-weight:800; font-size:14px; padding:11px; border-radius:10px; margin-bottom:10px;">
-          Buy Pro License Key Now (&#8377;299 UPI / $9 Card) &rarr;
-        </a>
-        <div style="font-size:12px; font-weight:800; color:var(--muted); margin-bottom:6px;">STEP 2: ENTER YOUR LICENSE KEY</div>
-        <div style="display:flex; gap:8px;">
-          <input type="text" id="licenseKeyInput" placeholder="e.g., GSTPRO-2026-XXXX" style="text-transform:uppercase; font-weight:800;" />
-          <button class="btn-top pro-cta" style="height:42px; padding:0 16px;" onclick="activateLicenseKey()">Activate</button>
-        </div>
-      </div>
-
-      <!-- Built-In Seller Key Generator so the User Can Generate Keys for Their Customers! -->
-      <div class="seller-box">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong style="color:var(--purple);">App Owner Admin: Generate Customer Keys</strong>
-          <button class="preset-btn" onclick="toggleAdminPanel()">Open Seller Tool</button>
-        </div>
-        <div id="adminKeyPanel" style="display:none; margin-top:10px;">
-          <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">
-            When a customer pays you &#8377;299 (via UPI, Razorpay, or Gumroad), type their name below to generate their personal unlock key with $0 server cost:
+        <!-- STEP 1: DIRECT UPI PAYMENT TO parveenfaruque@ybl -->
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5">
+          <div class="font-extrabold text-emerald-950 text-xs uppercase tracking-wider mb-1">
+            Step 1: Pay ₹299 Instantly via UPI
+          </div>
+          <p class="text-[11px] text-emerald-800 mb-2.5">
+            Tap the button below to pay <strong>₹299</strong> directly via Google Pay, PhonePe, Paytm, or BHIM to <strong>parveenfaruque@ybl</strong>:
           </p>
-          <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input type="text" id="customerSeedInput" placeholder="Customer Name or Phone (e.g. Rahul)" style="height:36px; font-size:13px;" />
-            <button class="btn-top" style="background:var(--purple); color:#fff; border:none;" onclick="generateCustomerKey()">Generate Key</button>
+
+          <a href="upi://pay?pa=parveenfaruque@ybl&pn=Rehan%20Digital%20And%20Trading&am=299.00&cu=INR&tn=GST%20Invoice%20Pro%20Unlock"
+             class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-2.5 px-4 rounded-lg shadow transition">
+            Open UPI App & Pay ₹299 Now →
+          </a>
+
+          <div class="mt-3 flex items-center gap-3 bg-white p-2 rounded-lg border border-emerald-200">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi%3A%2F%2Fpay%3Fpa%3Dparveenfaruque%40ybl%26pn%3DRehan%2520Digital%26am%3D299.00%26cu%3DINR"
+                 alt="Pay ₹299 QR" class="w-16 h-16 rounded border border-slate-200 shrink-0" />
+            <div class="text-[11px] text-slate-600 leading-snug">
+              <div><strong>UPI ID:</strong> <span class="font-mono font-bold text-slate-900">parveenfaruque@ybl</span></div>
+              <div class="mt-0.5 text-slate-500">On laptop? Scan this QR with any UPI app to pay ₹299.</div>
+            </div>
           </div>
-          <div id="generatedKeyDisplay" style="font-size:13px; font-weight:800; color:var(--emerald);"></div>
+        </div>
+
+        <!-- STEP 2: AUTOMATIC PASS KEY VERIFICATION VIA 12-DIGIT UTR -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 space-y-2">
+          <div class="font-extrabold text-blue-950 text-xs uppercase tracking-wider">
+            Step 2: Instant Automatic Pass Key
+          </div>
+          <p class="text-[11px] text-blue-800">
+            After paying ₹299, enter your Shop Name and the <strong>12-digit UPI Ref / UTR Number</strong> from your payment screen to automatically generate your Pass Key & unlock Pro immediately:
+          </p>
+          <input type="text" id="utrBizNameInput" placeholder="Your Shop / Business Name" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-white font-medium" />
+          <input type="text" id="utrNumberInput" maxlength="12" placeholder="12-Digit UPI Ref / UTR No. (e.g. 412589632147)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-white font-mono font-bold" />
+          <button type="button" onclick="verifyUtrAndAutoUnlock()" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-extrabold text-xs py-2.5 rounded-lg shadow transition">
+            Verify UPI Ref & Get Automatic Pass Key
+          </button>
+          <div id="autoKeyResultBox" class="hidden bg-emerald-100 border border-emerald-400 text-emerald-950 p-2.5 rounded-lg text-center font-bold text-xs"></div>
+        </div>
+
+        <!-- ALREADY HAVE A KEY? -->
+        <div class="pt-2 border-t border-slate-200">
+          <label class="block text-[11px] font-bold text-slate-600 mb-1">Already have a Pro Pass Key?</label>
+          <div class="flex gap-2">
+            <input type="text" id="manualKeyInput" placeholder="GSTPRO-XXXX-XXXX" class="flex-1 border border-slate-300 rounded-lg px-3 py-1.5 text-xs uppercase font-mono font-bold" />
+            <button type="button" onclick="activateManualKey()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg">
+              Activate
+            </button>
+          </div>
+        </div>
+
+        <!-- SELLER ADMIN GENERATOR (COLLAPSIBLE) -->
+        <div class="pt-2 border-t border-slate-100 text-right">
+          <button type="button" onclick="toggleSellerTool()" class="text-[11px] text-slate-400 hover:text-slate-600 underline">
+            Open Seller Tool
+          </button>
+          <div id="sellerToolBox" class="hidden mt-2 bg-slate-100 p-3 rounded-lg text-left space-y-2">
+            <div class="text-[11px] font-bold text-slate-700">Seller Key Generator (For Customer Support)</div>
+            <div class="flex gap-2">
+              <input type="text" id="sellerCustomerInput" placeholder="Customer Name or Phone" class="flex-1 border border-slate-300 rounded px-2 py-1 text-xs bg-white" />
+              <button type="button" onclick="generateSellerKey()" class="bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded">
+                Generate Key
+              </button>
+            </div>
+            <div id="sellerKeyOutput" class="font-mono font-extrabold text-xs text-blue-900"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ================= APPLICATION JAVASCRIPT ================= -->
   <script>
-    const STORAGE_BIZ = 'gst_invoice_maker_biz_v2';
-    const STORAGE_HISTORY = 'quickbill_pro_history_v1';
-    const STORAGE_PRO = 'quickbill_pro_unlocked_v1';
-    const STORAGE_CUR = 'quickbill_pro_currency_v1';
-    const STORAGE_DARK = 'quickbill_pro_dark_v1';
+    // 100 Built-In Services, Food & Products Catalog
+    const BUILTIN_CATALOG = [
+      // Grocery & Kirana (25)
+      { cat: 'Grocery', name: 'Basmati Rice (Premium)', unit: 'kg', price: 110, gst: 5 },
+      { cat: 'Grocery', name: 'Miniket Rice', unit: 'kg', price: 58, gst: 0 },
+      { cat: 'Grocery', name: 'Chakki Fresh Atta', unit: 'kg', price: 46, gst: 5 },
+      { cat: 'Grocery', name: 'Maida (Refined Flour)', unit: 'kg', price: 44, gst: 0 },
+      { cat: 'Grocery', name: 'Mustard Oil (Kachi Ghani)', unit: 'ltr', price: 165, gst: 5 },
+      { cat: 'Grocery', name: 'Refined Sunflower Oil', unit: 'ltr', price: 140, gst: 5 },
+      { cat: 'Grocery', name: 'Toor / Arhar Dal', unit: 'kg', price: 145, gst: 0 },
+      { cat: 'Grocery', name: 'Masoor Dal', unit: 'kg', price: 98, gst: 0 },
+      { cat: 'Grocery', name: 'Moong Dal', unit: 'kg', price: 115, gst: 0 },
+      { cat: 'Grocery', name: 'Chana Dal', unit: 'kg', price: 88, gst: 0 },
+      { cat: 'Grocery', name: 'Sugar (Refined)', unit: 'kg', price: 45, gst: 5 },
+      { cat: 'Grocery', name: 'Iodized Salt Packet', unit: 'pkt', price: 28, gst: 0 },
+      { cat: 'Grocery', name: 'Assam CTC Tea Leaf', unit: 'gm', price: 120, gst: 5 },
+      { cat: 'Grocery', name: 'Pure Cow Ghee', unit: 'ltr', price: 620, gst: 12 },
+      { cat: 'Grocery', name: 'Fresh Paneer', unit: 'gm', price: 95, gst: 5 },
+      { cat: 'Grocery', name: 'Amul Butter (100g)', unit: 'pkt', price: 58, gst: 12 },
+      { cat: 'Grocery', name: 'Turmeric Powder (Haldi)', unit: 'pkt', price: 45, gst: 5 },
+      { cat: 'Grocery', name: 'Red Chilli Powder', unit: 'pkt', price: 55, gst: 5 },
+      { cat: 'Grocery', name: 'Cumin Powder (Jeera)', unit: 'pkt', price: 65, gst: 5 },
+      { cat: 'Grocery', name: 'Garam Masala Packet', unit: 'pkt', price: 50, gst: 5 },
+      { cat: 'Grocery', name: 'Biscuit Family Pack', unit: 'pkt', price: 35, gst: 18 },
+      { cat: 'Grocery', name: 'Instant Noodles Pack', unit: 'pkt', price: 14, gst: 18 },
+      { cat: 'Grocery', name: 'Detergent Washing Powder', unit: 'kg', price: 130, gst: 18 },
+      { cat: 'Grocery', name: 'Bath Soap Bar', unit: 'pcs', price: 38, gst: 18 },
+      { cat: 'Grocery', name: 'Dishwash Liquid Gel', unit: 'ltr', price: 115, gst: 18 },
 
-    const CURRENCIES = {
-      INR: { symbol: '\u20B9', code: 'INR', locale: 'en-IN', taxLabel: 'GST (CGST+SGST)' },
-      USD: { symbol: '$',      code: 'USD', locale: 'en-US', taxLabel: 'Sales Tax' },
-      EUR: { symbol: '\u20AC', code: 'EUR', locale: 'en-IE', taxLabel: 'VAT' },
-      BDT: { symbol: '\u09F3', code: 'BDT', locale: 'en-IN', taxLabel: 'VAT / Tax' },
-      GBP: { symbol: '\u00A3', code: 'GBP', locale: 'en-GB', taxLabel: 'VAT' }
-    };
+      // Food & Bakery (20)
+      { cat: 'Food', name: 'Chicken Biryani (Full Plate)', unit: 'plate', price: 180, gst: 5 },
+      { cat: 'Food', name: 'Mutton Biryani (Special)', unit: 'plate', price: 260, gst: 5 },
+      { cat: 'Food', name: 'Egg Chicken Roll', unit: 'pcs', price: 80, gst: 5 },
+      { cat: 'Food', name: 'Paneer Butter Masala', unit: 'plate', price: 160, gst: 5 },
+      { cat: 'Food', name: 'Chicken Kosha (4 pcs)', unit: 'plate', price: 170, gst: 5 },
+      { cat: 'Food', name: 'Mixed Hakka Chowmein', unit: 'plate', price: 130, gst: 5 },
+      { cat: 'Food', name: 'Chilli Chicken (8 pcs)', unit: 'plate', price: 160, gst: 5 },
+      { cat: 'Food', name: 'Butter Naan / Tandoori Roti', unit: 'pcs', price: 35, gst: 5 },
+      { cat: 'Food', name: 'Masala Dosa with Sambhar', unit: 'plate', price: 90, gst: 5 },
+      { cat: 'Food', name: 'Steamed Chicken Momo', unit: 'plate', price: 80, gst: 5 },
+      { cat: 'Food', name: 'Veg Thali / Meal Package', unit: 'plate', price: 110, gst: 5 },
+      { cat: 'Food', name: 'Fish Thali (Katla / Rohu)', unit: 'plate', price: 160, gst: 5 },
+      { cat: 'Food', name: 'Black Forest Birthday Cake', unit: 'kg', price: 550, gst: 18 },
+      { cat: 'Food', name: 'Chocolate Pastry', unit: 'pcs', price: 55, gst: 18 },
+      { cat: 'Food', name: 'Baked Rosogolla', unit: 'pcs', price: 20, gst: 5 },
+      { cat: 'Food', name: 'Sandesh / Kaju Barfi', unit: 'kg', price: 480, gst: 5 },
+      { cat: 'Food', name: 'Mishti Doi (Sweet Curd)', unit: 'kg', price: 180, gst: 5 },
+      { cat: 'Food', name: 'Singara / Samosa (Hot)', unit: 'pcs', price: 10, gst: 5 },
+      { cat: 'Food', name: 'Mineral Water Bottle (1L)', unit: 'pcs', price: 20, gst: 18 },
+      { cat: 'Food', name: 'Cold Drink Bottle (750ml)', unit: 'pcs', price: 45, gst: 28 },
 
-    function safeGet(k) {
-      try { return localStorage.getItem(k); } catch (e) { return null; }
-    }
-    function safeSet(k, v) {
-      try { localStorage.setItem(k, v); } catch (e) {}
-    }
+      // Repair & Services (20)
+      { cat: 'Services', name: 'AC Servicing & Jet Wash', unit: 'service', price: 599, gst: 18 },
+      { cat: 'Services', name: 'AC Gas Refilling (Full)', unit: 'service', price: 2200, gst: 18 },
+      { cat: 'Services', name: 'Refrigerator Repair Service', unit: 'service', price: 450, gst: 18 },
+      { cat: 'Services', name: 'Washing Machine Repair', unit: 'service', price: 500, gst: 18 },
+      { cat: 'Services', name: 'RO Water Purifier Filter Change', unit: 'service', price: 850, gst: 18 },
+      { cat: 'Services', name: 'Mobile Screen Replacement', unit: 'pcs', price: 1600, gst: 18 },
+      { cat: 'Services', name: 'Mobile Battery Replacement', unit: 'pcs', price: 850, gst: 18 },
+      { cat: 'Services', name: 'Laptop Formatting & OS Setup', unit: 'service', price: 600, gst: 18 },
+      { cat: 'Services', name: 'CCTV Camera Installation', unit: 'service', price: 1500, gst: 18 },
+      { cat: 'Services', name: 'Electrical Wiring & Point Work', unit: 'service', price: 400, gst: 18 },
+      { cat: 'Services', name: 'Plumbing & Tap Leakage Repair', unit: 'service', price: 350, gst: 18 },
+      { cat: 'Services', name: 'Carpentry & Door Lock Fitting', unit: 'service', price: 450, gst: 18 },
+      { cat: 'Services', name: 'House Painting Labor Charge', unit: 'days', price: 750, gst: 18 },
+      { cat: 'Services', name: 'Bike / Two-Wheeler Servicing', unit: 'service', price: 450, gst: 18 },
+      { cat: 'Services', name: 'Car Wash & Interior Vacuum', unit: 'service', price: 500, gst: 18 },
+      { cat: 'Services', name: 'Tailoring - Suit / Blouse Stitching', unit: 'pcs', price: 650, gst: 5 },
+      { cat: 'Services', name: 'Men Haircut & Beard Grooming', unit: 'service', price: 180, gst: 18 },
+      { cat: 'Services', name: 'Bridal Makeup & Hair Styling', unit: 'service', price: 6500, gst: 18 },
+      { cat: 'Services', name: 'Dry Cleaning & Steam Iron', unit: 'pcs', price: 150, gst: 18 },
+      { cat: 'Services', name: 'Local Transport / Delivery Charge', unit: 'service', price: 250, gst: 5 },
 
-    let currentCurrency = safeGet(STORAGE_CUR) || 'INR';
-    if (!CURRENCIES[currentCurrency]) currentCurrency = 'INR';
+      // Digital, Coaching & Freelance (18)
+      { cat: 'Digital', name: 'Website Design & Development', unit: 'service', price: 6500, gst: 18 },
+      { cat: 'Digital', name: 'Landing Page / E-Commerce Setup', unit: 'service', price: 3500, gst: 18 },
+      { cat: 'Digital', name: 'Logo & Brand Banner Design', unit: 'pcs', price: 800, gst: 18 },
+      { cat: 'Digital', name: 'YouTube Video Editing & Thumbnail', unit: 'pcs', price: 1200, gst: 18 },
+      { cat: 'Digital', name: 'Social Media Marketing Package', unit: 'month', price: 4500, gst: 18 },
+      { cat: 'Digital', name: 'Facebook & Google Ads Setup', unit: 'service', price: 2500, gst: 18 },
+      { cat: 'Digital', name: 'SEO Content / Blog Writing', unit: 'pcs', price: 600, gst: 18 },
+      { cat: 'Digital', name: 'Monthly Tuition / Coaching Fee', unit: 'month', price: 1200, gst: 0 },
+      { cat: 'Digital', name: 'Computer Course Training Fee', unit: 'month', price: 1000, gst: 18 },
+      { cat: 'Digital', name: 'GST Return Filing (GSTR-1 & 3B)', unit: 'service', price: 800, gst: 18 },
+      { cat: 'Digital', name: 'Income Tax Return (ITR) Filing', unit: 'service', price: 1000, gst: 18 },
+      { cat: 'Digital', name: 'PAN / Trade License Application', unit: 'service', price: 350, gst: 18 },
+      { cat: 'Digital', name: 'Passport Photo Print (8 Copies)', unit: 'pkt', price: 60, gst: 18 },
+      { cat: 'Digital', name: 'A4 Color Printout & Spiral Binding', unit: 'pcs', price: 80, gst: 18 },
+      { cat: 'Digital', name: 'PVC ID Card Printing', unit: 'pcs', price: 50, gst: 18 },
+      { cat: 'Digital', name: 'Flex Banner Printing', unit: 'mtr', price: 180, gst: 18 },
+      { cat: 'Digital', name: 'Wedding Photography Package', unit: 'service', price: 15000, gst: 18 },
+      { cat: 'Digital', name: 'Android App Setup & Publishing', unit: 'service', price: 5000, gst: 18 },
 
-    let isProUnlocked = safeGet(STORAGE_PRO) === 'true';
-    let isDark = safeGet(STORAGE_DARK) === 'true';
-
-    let bizProfile = {
-      name: 'Your Business / Shop Name',
-      logo: 'BIZ',
-      phone: '+91 98000 00000 • Your City, India',
-      upi: 'merchant@upi',
-      gst: '19ABCDE1234F1Z5'
-    };
-    try {
-      const savedBiz = JSON.parse(safeGet(STORAGE_BIZ));
-      if (savedBiz && typeof savedBiz === 'object') {
-        bizProfile = Object.assign(bizProfile, savedBiz);
-      }
-    } catch (e) {}
-
-    let invoiceHistory = [];
-    try {
-      invoiceHistory = JSON.parse(safeGet(STORAGE_HISTORY)) || [];
-    } catch (e) {
-      invoiceHistory = [];
-    }
-
-    let lineItems = [
-      { id: 1, desc: 'Business Website & Mobile App Setup', qty: 1, price: 4500, taxPct: 18 },
-      { id: 2, desc: 'Annual Maintenance & Support', qty: 1, price: 1500, taxPct: 18 }
+      // Electronics, Hardware & Retail (17)
+      { cat: 'Retail', name: '9W LED Bulb (2 Year Warranty)', unit: 'pcs', price: 95, gst: 12 },
+      { cat: 'Retail', name: '20W LED Tube Light Batten', unit: 'pcs', price: 220, gst: 12 },
+      { cat: 'Retail', name: 'High Speed Ceiling Fan (48 inch)', unit: 'pcs', price: 1650, gst: 18 },
+      { cat: 'Retail', name: 'Fast USB Type-C Charger (33W)', unit: 'pcs', price: 450, gst: 18 },
+      { cat: 'Retail', name: 'Bluetooth Wireless Earbuds', unit: 'pcs', price: 899, gst: 18 },
+      { cat: 'Retail', name: 'Tempered Glass Screen Guard', unit: 'pcs', price: 120, gst: 18 },
+      { cat: 'Retail', name: 'Wireless Mouse & Keyboard Combo', unit: 'box', price: 950, gst: 18 },
+      { cat: 'Retail', name: '64GB USB Pendrive / Memory Card', unit: 'pcs', price: 480, gst: 18 },
+      { cat: 'Retail', name: 'Cotton Printed Saree', unit: 'pcs', price: 750, gst: 5 },
+      { cat: 'Retail', name: 'Men Cotton Shirt / Kurta', unit: 'pcs', price: 650, gst: 5 },
+      { cat: 'Retail', name: 'Denim Jeans Trouser', unit: 'pcs', price: 950, gst: 12 },
+      { cat: 'Retail', name: 'School Bag / Backpack', unit: 'pcs', price: 550, gst: 18 },
+      { cat: 'Retail', name: 'Plastic Water Tank (500 Litre)', unit: 'pcs', price: 3400, gst: 18 },
+      { cat: 'Retail', name: 'Portland Cement Bag (50 kg)', unit: 'pkt', price: 380, gst: 28 },
+      { cat: 'Retail', name: 'Wall Putty Bag (20 kg)', unit: 'pkt', price: 520, gst: 18 },
+      { cat: 'Retail', name: 'PVC Pipe (10 Feet Length)', unit: 'pcs', price: 240, gst: 18 },
+      { cat: 'Retail', name: 'General Medicine / Pharmacy Strip', unit: 'pkt', price: 120, gst: 12 }
     ];
 
-    let toastTimeout = null;
-    function notify(msg) {
-      const bar = document.getElementById('toastBar');
-      if (!bar) return;
-      bar.textContent = msg;
-      bar.classList.add('show');
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(function() {
-        bar.classList.remove('show');
-      }, 2500);
+    let activeCategory = 'ALL';
+
+    // Default App State
+    let appState = {
+      isPro: false,
+      proKey: '',
+      bizLogo: 'RD&',
+      bizName: 'Rehan Digital & Trading',
+      bizAddress: '+91 98000 00000 • West Bengal, India',
+      bizGstin: '',
+      bizUpi: 'parveenfaruque@ybl',
+      docTitle: 'TAX INVOICE',
+      invNumber: 'INV-101',
+      invDate: formatTodayDate(),
+      custName: 'Walk-in Customer',
+      custPhone: '',
+      custAddress: '',
+      items: [
+        { name: 'Website Design & Development', qty: 1, unit: 'service', price: 6500, gst: 18 },
+        { name: 'Basmati Rice (Premium)', qty: 5, unit: 'kg', price: 110, gst: 5 }
+      ],
+      savedBills: []
+    };
+
+    function formatTodayDate() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return dd + '/' + mm + '/' + yyyy;
     }
 
-    function fmtMoney(val) {
-      const c = CURRENCIES[currentCurrency];
-      const num = Number(val) || 0;
-      return c.symbol + num.toLocaleString(c.locale, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
-    function switchPane(pane) {
-      const map = {
-        create: { tab: 'tabCreate', pane: 'paneCreate' },
-        preview: { tab: 'tabPreview', pane: 'panePreview' },
-        history: { tab: 'tabHistory', pane: 'paneHistory' }
-      };
-      Object.keys(map).forEach(function(k) {
-        const active = k === pane;
-        document.getElementById(map[k].tab).classList.toggle('active', active);
-        document.getElementById(map[k].pane).classList.toggle('active', active);
+    function loadState() {
+      try {
+        const raw = localStorage.getItem('gst_invoice_maker_state_v3');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          appState = Object.assign({}, appState, parsed);
+        }
+      } catch (e) {
+        console.warn('Could not load saved state:', e);
+      }
+
+      // Check URL auto-redirect unlock (?pro_unlock=1)
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('pro_unlock') === '1') {
+        appState.isPro = true;
+        appState.proKey = 'GSTPRO-AUTO-PAID';
+        saveState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('gst_invoice_maker_state_v3', JSON.stringify(appState));
+      } catch (e) {
+        console.warn('Could not save state:', e);
+      }
+    }
+
+    function populateFormFromState() {
+      document.getElementById('bizLogoInput').value = appState.bizLogo || '';
+      document.getElementById('bizNameInput').value = appState.bizName || '';
+      document.getElementById('bizAddressInput').value = appState.bizAddress || '';
+      document.getElementById('bizGstinInput').value = appState.bizGstin || '';
+      document.getElementById('bizUpiInput').value = appState.bizUpi || '';
+      document.getElementById('docTitleInput').value = appState.docTitle || 'TAX INVOICE';
+      document.getElementById('invNumberInput').value = appState.invNumber || 'INV-101';
+      document.getElementById('invDateInput').value = appState.invDate || formatTodayDate();
+      document.getElementById('custNameInput').value = appState.custName || '';
+      document.getElementById('custPhoneInput').value = appState.custPhone || '';
+      document.getElementById('custAddressInput').value = appState.custAddress || '';
+    }
+
+    function syncFormToState() {
+      appState.bizLogo = document.getElementById('bizLogoInput').value;
+      appState.bizName = document.getElementById('bizNameInput').value;
+      appState.bizAddress = document.getElementById('bizAddressInput').value;
+      appState.bizGstin = document.getElementById('bizGstinInput').value.trim().toUpperCase();
+      appState.bizUpi = document.getElementById('bizUpiInput').value.trim();
+      appState.docTitle = document.getElementById('docTitleInput').value;
+      appState.invNumber = document.getElementById('invNumberInput').value;
+      appState.invDate = document.getElementById('invDateInput').value;
+      appState.custName = document.getElementById('custNameInput').value;
+      appState.custPhone = document.getElementById('custPhoneInput').value;
+      appState.custAddress = document.getElementById('custAddressInput').value;
+      saveState();
+      renderAll();
+    }
+
+    function syncPreviewToState() {
+      appState.bizLogo = document.getElementById('prevBizLogo').innerText.trim();
+      appState.bizName = document.getElementById('prevBizName').innerText.trim();
+      appState.bizAddress = document.getElementById('prevBizAddress').innerText.trim();
+      appState.docTitle = document.getElementById('prevDocTitle').innerText.trim();
+      appState.invNumber = document.getElementById('prevInvNumber').innerText.trim();
+      appState.invDate = document.getElementById('prevInvDate').innerText.trim();
+      appState.custName = document.getElementById('prevCustName').innerText.trim();
+      populateFormFromState();
+      saveState();
+      renderAll();
+    }
+
+    function clearBusinessHeader() {
+      appState.bizLogo = 'BIZ';
+      appState.bizName = 'Your Business / Shop Name';
+      appState.bizAddress = 'Phone • City, State';
+      appState.bizGstin = '';
+      populateFormFromState();
+      saveState();
+      renderAll();
+    }
+
+    // Filter Catalog Category
+    function filterCatalogCategory(cat) {
+      activeCategory = cat;
+      const cats = ['ALL', 'Grocery', 'Food', 'Services', 'Digital', 'Retail'];
+      cats.forEach(function(c) {
+        const btn = document.getElementById('catBtn_' + c);
+        if (!btn) return;
+        if (c === cat) {
+          btn.className = 'px-2.5 py-1 rounded-full font-bold bg-blue-900 text-white shrink-0';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0';
+        }
       });
-      renderAll();
+      const currentSearch = document.getElementById('itemNameInput').value;
+      renderCatalogChips(currentSearch);
     }
 
-    function setCurrency(code) {
-      if (!CURRENCIES[code]) return;
-      currentCurrency = code;
-      safeSet(STORAGE_CUR, code);
-      renderAll();
-      notify('Currency switched to ' + code);
-    }
+    // Render 100 Built-In Items in Scrollable Container & Highlight Matches
+    function renderCatalogChips(searchQuery) {
+      const container = document.getElementById('catalogScrollBox');
+      const badge = document.getElementById('matchStatusBadge');
+      if (!container) return;
 
-    function toggleTheme() {
-      isDark = !isDark;
-      safeSet(STORAGE_DARK, String(isDark));
-      applyTheme();
-    }
+      const q = String(searchQuery || '').trim().toLowerCase();
+      let pool = BUILTIN_CATALOG.map(function(item, index) {
+        const isMatch = q.length > 0 && item.name.toLowerCase().indexOf(q) !== -1;
+        return { item: item, index: index, isMatch: isMatch };
+      });
 
-    function applyTheme() {
-      document.body.classList.toggle('dark-mode', isDark);
-      document.getElementById('darkBtn').textContent = isDark ? 'Light' : 'Dark';
-    }
+      if (activeCategory !== 'ALL') {
+        pool = pool.filter(function(entry) {
+          return entry.item.cat === activeCategory || entry.isMatch;
+        });
+      }
 
-    function computeAutoInitials(nameStr) {
-      const clean = (nameStr || '').trim();
-      if (!clean) return 'GST';
-      return clean.split(/\s+/).map(function(w) { return w[0]; }).join('').slice(0, 3).toUpperCase();
-    }
+      // Put matching items at the top when typing
+      if (q.length > 0) {
+        pool.sort(function(a, b) {
+          if (a.isMatch && !b.isMatch) return -1;
+          if (!a.isMatch && b.isMatch) return 1;
+          return a.index - b.index;
+        });
+      }
 
-    function populateBizInputs() {
-      document.getElementById('bizNameMain').value = bizProfile.name;
-      document.getElementById('bizLogoMain').value = bizProfile.logo || computeAutoInitials(bizProfile.name);
-      document.getElementById('bizPhoneMain').value = bizProfile.phone;
-      document.getElementById('bizUpiMain').value = bizProfile.upi;
-      document.getElementById('bizGstMain').value = bizProfile.gst;
-
-      document.getElementById('bizNameInput').value = bizProfile.name;
-      document.getElementById('bizLogoInput').value = bizProfile.logo || computeAutoInitials(bizProfile.name);
-      document.getElementById('bizPhoneInput').value = bizProfile.phone;
-      document.getElementById('bizUpiInput').value = bizProfile.upi;
-      document.getElementById('bizGstInput').value = bizProfile.gst;
-    }
-
-    function syncBizFromMain() {
-      const newName = document.getElementById('bizNameMain').value;
-      const newLogo = document.getElementById('bizLogoMain').value.trim().toUpperCase();
-      bizProfile.name = newName.trim() || 'Your Business Name';
-      bizProfile.logo = newLogo || computeAutoInitials(bizProfile.name);
-      bizProfile.phone = document.getElementById('bizPhoneMain').value.trim() || 'Phone / Address';
-      bizProfile.upi = document.getElementById('bizUpiMain').value.trim() || 'merchant@upi';
-      bizProfile.gst = document.getElementById('bizGstMain').value.trim();
-
-      document.getElementById('bizNameInput').value = document.getElementById('bizNameMain').value;
-      document.getElementById('bizLogoInput').value = document.getElementById('bizLogoMain').value;
-      document.getElementById('bizPhoneInput').value = document.getElementById('bizPhoneMain').value;
-      document.getElementById('bizUpiInput').value = document.getElementById('bizUpiMain').value;
-      document.getElementById('bizGstInput').value = document.getElementById('bizGstMain').value;
-
-      safeSet(STORAGE_BIZ, JSON.stringify(bizProfile));
-      renderAll();
-    }
-
-    function saveBusinessProfileFromSetup() {
-      const newName = document.getElementById('bizNameInput').value;
-      const newLogo = document.getElementById('bizLogoInput').value.trim().toUpperCase();
-      bizProfile.name = newName.trim() || 'Your Business Name';
-      bizProfile.logo = newLogo || computeAutoInitials(bizProfile.name);
-      bizProfile.phone = document.getElementById('bizPhoneInput').value.trim() || 'Phone / Address';
-      bizProfile.upi = document.getElementById('bizUpiInput').value.trim() || 'merchant@upi';
-      bizProfile.gst = document.getElementById('bizGstInput').value.trim();
-
-      document.getElementById('bizNameMain').value = document.getElementById('bizNameInput').value;
-      document.getElementById('bizLogoMain').value = document.getElementById('bizLogoInput').value;
-      document.getElementById('bizPhoneMain').value = document.getElementById('bizPhoneInput').value;
-      document.getElementById('bizUpiMain').value = document.getElementById('bizUpiInput').value;
-      document.getElementById('bizGstMain').value = document.getElementById('bizGstInput').value;
-
-      safeSet(STORAGE_BIZ, JSON.stringify(bizProfile));
-      renderAll();
-    }
-
-    function resetBizToBlank() {
-      bizProfile.name = '';
-      bizProfile.logo = 'GST';
-      bizProfile.phone = '';
-      bizProfile.upi = '';
-      bizProfile.gst = '';
-      populateBizInputs();
-      safeSet(STORAGE_BIZ, JSON.stringify(bizProfile));
-      renderAll();
-      document.getElementById('bizNameMain').focus();
-      notify('Cleared! Type your own business name & phone now.');
-    }
-
-    // Sync inline edits made directly on the Invoice Preview paper back to the form inputs
-    function syncFromInlinePreview() {
-      const logoTxt = (document.getElementById('previewLogo').textContent || '').trim().slice(0, 4).toUpperCase();
-      const bizNameTxt = (document.getElementById('previewBizName').textContent || '').trim();
-      const bizSubTxt = (document.getElementById('previewBizSub').textContent || '').trim();
-      const docTitleTxt = (document.getElementById('previewDocTitle').textContent || '').trim().toUpperCase();
-      const invNoTxt = (document.getElementById('previewInvNo').textContent || '').replace(/^#/, '').trim();
-      const dateTxt = (document.getElementById('previewDate').textContent || '').trim();
-      const clientNameTxt = (document.getElementById('previewClientName').textContent || '').trim();
-      const clientPhoneTxt = (document.getElementById('previewClientPhone').textContent || '').trim();
-
-      bizProfile.logo = logoTxt || 'GST';
-      bizProfile.name = bizNameTxt || 'Your Business Name';
-      bizProfile.phone = bizSubTxt || 'Phone / Address';
-      safeSet(STORAGE_BIZ, JSON.stringify(bizProfile));
-      populateBizInputs();
-
-      const docSelect = document.getElementById('docType');
-      let matchedOption = false;
-      for (let i = 0; i < docSelect.options.length; i++) {
-        if (docSelect.options[i].value.toUpperCase() === docTitleTxt) {
-          docSelect.selectedIndex = i;
-          matchedOption = true;
-          break;
+      const anyMatch = pool.some(function(entry) { return entry.isMatch; });
+      if (badge) {
+        if (q.length > 0 && anyMatch) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
         }
       }
-      if (!matchedOption && docTitleTxt) {
-        const customOpt = document.createElement('option');
-        customOpt.value = docTitleTxt;
-        customOpt.textContent = docTitleTxt;
-        docSelect.appendChild(customOpt);
-        docSelect.value = docTitleTxt;
-      }
 
-      if (invNoTxt) document.getElementById('invNumber').value = invNoTxt;
-      if (dateTxt) document.getElementById('invDate').value = dateTxt;
-      document.getElementById('clientName').value = clientNameTxt === 'Walk-in Customer' ? '' : clientNameTxt;
-      document.getElementById('clientPhone').value = clientPhoneTxt;
+      let html = '';
+      pool.forEach(function(entry) {
+        const it = entry.item;
+        const btnClasses = entry.isMatch
+          ? 'bg-emerald-600 text-white border-emerald-700 ring-2 ring-emerald-300 font-bold'
+          : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-300 font-medium';
 
-      renderAll();
-      notify('Invoice details updated!');
-    }
-
-    function fillItemPreset(desc, price, taxPct) {
-      document.getElementById('itemDesc').value = desc;
-      document.getElementById('itemQty').value = 1;
-      document.getElementById('itemPrice').value = price;
-      document.getElementById('itemTax').value = String(taxPct);
-      addLineItem();
-    }
-
-    function addLineItem() {
-      const descEl = document.getElementById('itemDesc');
-      const qtyEl = document.getElementById('itemQty');
-      const priceEl = document.getElementById('itemPrice');
-      const taxEl = document.getElementById('itemTax');
-
-      const desc = descEl.value.trim();
-      const qty = parseFloat(qtyEl.value) || 1;
-      const price = parseFloat(priceEl.value);
-      const taxPct = parseFloat(taxEl.value) || 0;
-
-      if (!desc || isNaN(price) || price <= 0) {
-        notify('Please enter an item description and valid price');
-        return;
-      }
-
-      lineItems.push({
-        id: Date.now() + Math.floor(Math.random() * 1000),
-        desc: desc,
-        qty: qty,
-        price: price,
-        taxPct: taxPct
+        html += '<button type="button" onclick="selectCatalogItem(' + entry.index + ')" class="text-xs px-2.5 py-1.5 rounded-lg border transition flex items-center gap-1 shadow-sm ' + btnClasses + '">' +
+                  '<span>＋ ' + escapeHtml(it.name) + '</span>' +
+                  '<span class="opacity-75 text-[10px]">(₹' + it.price + '/' + escapeHtml(it.unit) + ')</span>' +
+                '</button>';
       });
 
-      descEl.value = '';
-      priceEl.value = '';
-      qtyEl.value = '1';
-      renderAll();
-      notify('Added: ' + desc);
+      container.innerHTML = html;
     }
 
-    function removeLineItem(id) {
-      lineItems = lineItems.filter(function(item) { return item.id !== id; });
+    // When user types in Item Description box: highlight matches & auto-fill unit/price if exact match
+    function handleItemNameTyping(val) {
+      renderCatalogChips(val);
+      const clean = String(val || '').trim().toLowerCase();
+      if (!clean) return;
+      const exact = BUILTIN_CATALOG.find(function(it) {
+        return it.name.toLowerCase() === clean;
+      });
+      if (exact) {
+        document.getElementById('itemUnitInput').value = exact.unit;
+        document.getElementById('itemPriceInput').value = exact.price;
+        document.getElementById('itemGstInput').value = String(exact.gst);
+      }
+    }
+
+    // Tap a chip in the 100-item catalog to fill inputs AND add directly or let user adjust
+    function selectCatalogItem(idx) {
+      const chosen = BUILTIN_CATALOG[idx];
+      if (!chosen) return;
+      document.getElementById('itemNameInput').value = chosen.name;
+      document.getElementById('itemQtyInput').value = 1;
+      document.getElementById('itemUnitInput').value = chosen.unit;
+      document.getElementById('itemPriceInput').value = chosen.price;
+      document.getElementById('itemGstInput').value = String(chosen.gst);
+      renderCatalogChips(chosen.name);
+    }
+
+    function addItemFromForm() {
+      const nameEl = document.getElementById('itemNameInput');
+      const qtyEl = document.getElementById('itemQtyInput');
+      const unitEl = document.getElementById('itemUnitInput');
+      const priceEl = document.getElementById('itemPriceInput');
+      const gstEl = document.getElementById('itemGstInput');
+
+      const name = nameEl.value.trim() || 'Item / Service';
+      const qty = parseFloat(qtyEl.value) || 1;
+      const unit = unitEl.value || 'pcs';
+      const price = parseFloat(priceEl.value) || 0;
+      const gst = parseFloat(gstEl.value) || 0;
+
+      appState.items.push({
+        name: name,
+        qty: qty,
+        unit: unit,
+        price: price,
+        gst: gst
+      });
+
+      nameEl.value = '';
+      qtyEl.value = '1';
+      priceEl.value = '';
+      renderCatalogChips('');
+      saveState();
+      renderAll();
+    }
+
+    function removeItem(index) {
+      appState.items.splice(index, 1);
+      saveState();
+      renderAll();
+    }
+
+    function clearAllItems() {
+      appState.items = [];
+      saveState();
       renderAll();
     }
 
     function calculateTotals() {
       let subtotal = 0;
-      let totalTax = 0;
-      const discPct = Math.min(Math.max(parseFloat(document.getElementById('invDiscount').value) || 0, 0), 90);
-
-      lineItems.forEach(function(item) {
-        const lineBase = item.qty * item.price;
-        subtotal += lineBase;
+      let totalGst = 0;
+      appState.items.forEach(function(item) {
+        const base = (Number(item.qty) || 0) * (Number(item.price) || 0);
+        const tax = base * ((Number(item.gst) || 0) / 100);
+        subtotal += base;
+        totalGst += tax;
       });
-
-      const discountAmt = subtotal * (discPct / 100);
-      const afterDiscRatio = subtotal > 0 ? (subtotal - discountAmt) / subtotal : 1;
-
-      lineItems.forEach(function(item) {
-        const netLine = (item.qty * item.price) * afterDiscRatio;
-        totalTax += netLine * (item.taxPct / 100);
-      });
-
-      const grandTotal = Math.max(0, (subtotal - discountAmt) + totalTax);
       return {
         subtotal: subtotal,
-        discountAmt: discountAmt,
-        discPct: discPct,
-        totalTax: totalTax,
-        grandTotal: grandTotal
+        totalGst: totalGst,
+        cgst: totalGst / 2,
+        sgst: totalGst / 2,
+        grandTotal: subtotal + totalGst
       };
     }
 
-    // Deterministic Visual QR Code SVG Generator for UPI Payload
-    function buildVisualQrSvg(payloadText) {
-      let hash = 2166136261;
-      for (let i = 0; i < payloadText.length; i++) {
-        hash ^= payloadText.charCodeAt(i);
-        hash = Math.imul(hash, 16777619);
-      }
-      const size = 21;
-      let rects = '';
-      function isFinder(r, c) {
-        const topLeft = r < 7 && c < 7;
-        const topRight = r < 7 && c >= size - 7;
-        const botLeft = r >= size - 7 && c < 7;
-        return topLeft || topRight || botLeft;
-      }
-      function finderCell(r, c, r0, c0) {
-        const dr = r - r0;
-        const dc = c - c0;
-        if (dr === 0 || dr === 6 || dc === 0 || dc === 6) return true;
-        if (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4) return true;
-        return false;
-      }
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c < size; c++) {
-          let dark = false;
-          if (isFinder(r, c)) {
-            if (r < 7 && c < 7) dark = finderCell(r, c, 0, 0);
-            else if (r < 7 && c >= size - 7) dark = finderCell(r, c, 0, size - 7);
-            else dark = finderCell(r, c, size - 7, 0);
-          } else {
-            const bitSeed = Math.imul(hash ^ (r * 31 + c * 17), 2654435761) >>> 0;
-            dark = (bitSeed % 11) < 5;
-          }
-          if (dark) {
-            rects += '<rect x="' + c + '" y="' + r + '" width="1" height="1" fill="#0f172a"/>';
-          }
-        }
-      }
-      return '<svg viewBox="0 0 ' + size + ' ' + size + '" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + rects + '</svg>';
-    }
+    function renderAll() {
+      // Pro Status UI
+      const proBadge = document.getElementById('proStatusBadge');
+      const proBtn = document.getElementById('openProModalBtn');
+      const watermark = document.getElementById('invoiceWatermark');
 
-    function loadSampleInvoice() {
-      document.getElementById('clientName').value = 'Sunrise Mart & Co.';
-      document.getElementById('clientPhone').value = '+91 98300 12345';
-      document.getElementById('invNumber').value = 'INV-' + Math.floor(100 + Math.random() * 899);
-      document.getElementById('invDate').value = new Date().toLocaleDateString('en-IN');
-      lineItems = [
-        { id: 1, desc: 'E-Commerce Catalog & Mobile App Setup', qty: 1, price: 6500, taxPct: 18 },
-        { id: 2, desc: 'Social Media Ad Banner Pack (5 Designs)', qty: 1, price: 2000, taxPct: 18 },
-        { id: 3, desc: 'Domain & Hosting Configuration', qty: 1, price: 1200, taxPct: 0 }
-      ];
-      renderAll();
-      notify('Sample invoice loaded!');
-    }
+      if (appState.isPro) {
+        proBadge.classList.remove('hidden');
+        proBtn.classList.add('hidden');
+        watermark.classList.add('hidden');
+      } else {
+        proBadge.classList.add('hidden');
+        proBtn.classList.remove('hidden');
+        watermark.classList.remove('hidden');
+      }
 
-    function clearCurrentBill() {
-      lineItems = [];
-      document.getElementById('clientName').value = '';
-      document.getElementById('clientPhone').value = '';
-      document.getElementById('invDiscount').value = '0';
-      document.getElementById('invNumber').value = 'INV-' + Math.floor(100 + Math.random() * 899);
-      document.getElementById('invDate').value = new Date().toLocaleDateString('en-IN');
-      switchPane('create');
-      renderAll();
-      notify('Started a blank bill');
-    }
+      // Render Edit Items List
+      const editList = document.getElementById('editItemsList');
+      if (appState.items.length === 0) {
+        editList.innerHTML = '<div class="text-xs text-slate-400 italic py-3 text-center bg-slate-50 rounded-lg border border-dashed border-slate-200">No items in bill yet. Tap any built-in item above or add one!</div>';
+      } else {
+        let listHtml = '';
+        appState.items.forEach(function(item, idx) {
+          const base = item.qty * item.price;
+          const tax = base * (item.gst / 100);
+          const total = base + tax;
+          listHtml += '<div class="flex items-center justify-between gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm">' +
+                        '<div>' +
+                          '<div class="font-bold text-slate-800">' + (idx + 1) + '. ' + escapeHtml(item.name) + '</div>' +
+                          '<div class="text-xs text-slate-500">Qty: <strong>' + item.qty + ' ' + escapeHtml(item.unit || 'pcs') + '</strong> × Unit Price: <strong>₹' + Number(item.price).toFixed(2) + '</strong> (GST ' + item.gst + '%)</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-3">' +
+                          '<span class="font-extrabold text-slate-900">₹' + total.toFixed(2) + '</span>' +
+                          '<button type="button" onclick="removeItem(' + idx + ')" class="text-red-500 hover:text-red-700 font-bold px-1.5 py-0.5 rounded bg-red-50">✕</button>' +
+                        '</div>' +
+                      '</div>';
+        });
+        editList.innerHTML = listHtml;
+      }
 
-    function saveCurrentInvoice() {
+      // Totals
       const totals = calculateTotals();
-      if (lineItems.length === 0 || totals.grandTotal <= 0) {
-        notify('Add at least one item before saving the bill');
-        return;
+      document.getElementById('editSubtotalText').innerText = '₹' + totals.subtotal.toFixed(2);
+      document.getElementById('editGstText').innerText = '₹' + totals.totalGst.toFixed(2);
+      document.getElementById('editGrandTotalText').innerText = '₹' + totals.grandTotal.toFixed(2);
+
+      // Update Preview Paper Header
+      document.getElementById('prevBizLogo').innerText = appState.bizLogo || 'BIZ';
+      document.getElementById('prevBizName').innerText = appState.bizName || 'Your Business Name';
+      document.getElementById('prevBizAddress').innerText = appState.bizAddress || '';
+      const gstLine = document.getElementById('prevBizGstinLine');
+      if (appState.bizGstin) {
+        gstLine.classList.remove('hidden');
+        document.getElementById('prevBizGstin').innerText = appState.bizGstin;
+      } else {
+        gstLine.classList.add('hidden');
       }
-      const invNo = document.getElementById('invNumber').value.trim() || 'INV-101';
-      const invDateVal = document.getElementById('invDate').value.trim() || new Date().toLocaleDateString('en-IN');
-      const client = document.getElementById('clientName').value.trim() || 'Walk-in Customer';
-      const docType = document.getElementById('docType').value;
 
-      invoiceHistory.unshift({
-        id: Date.now(),
-        invNo: invNo,
-        client: client,
-        docType: docType,
-        amount: totals.grandTotal,
-        date: invDateVal,
-        paid: docType === 'PAYMENT RECEIPT'
+      document.getElementById('prevDocTitle').innerText = appState.docTitle || 'TAX INVOICE';
+      document.getElementById('prevInvNumber').innerText = appState.invNumber || 'INV-101';
+      document.getElementById('prevInvDate').innerText = appState.invDate || formatTodayDate();
+      document.getElementById('prevCustName').innerText = appState.custName || 'Walk-in Customer';
+      document.getElementById('prevCustPhone').innerText = appState.custPhone ? ('Phone: ' + appState.custPhone) : '';
+      document.getElementById('prevCustAddress').innerText = appState.custAddress || '';
+
+      // Update Preview Table Body (Unit Price Column)
+      const tbody = document.getElementById('previewTableBody');
+      let tableHtml = '';
+      appState.items.forEach(function(item, i) {
+        const base = item.qty * item.price;
+        const tax = base * (item.gst / 100);
+        const lineTotal = base + tax;
+        tableHtml += '<tr>' +
+                       '<td class="py-2.5 px-2 text-slate-500">' + (i + 1) + '</td>' +
+                       '<td class="py-2.5 px-2 font-semibold text-slate-800">' + escapeHtml(item.name) + '</td>' +
+                       '<td class="py-2.5 px-2 text-center font-medium">' + item.qty + ' ' + escapeHtml(item.unit || 'pcs') + '</td>' +
+                       '<td class="py-2.5 px-2 text-right">₹' + Number(item.price).toFixed(2) + '</td>' +
+                       '<td class="py-2.5 px-2 text-right text-slate-600">' + item.gst + '% (₹' + tax.toFixed(2) + ')</td>' +
+                       '<td class="py-2.5 px-2 text-right font-bold text-slate-900">₹' + lineTotal.toFixed(2) + '</td>' +
+                     '</tr>';
       });
+      tbody.innerHTML = tableHtml;
 
-      safeSet(STORAGE_HISTORY, JSON.stringify(invoiceHistory));
-      renderAll();
-      notify('Saved ' + invNo + ' to History!');
+      document.getElementById('prevSubtotal').innerText = '₹' + totals.subtotal.toFixed(2);
+      document.getElementById('prevCgst').innerText = '₹' + totals.cgst.toFixed(2);
+      document.getElementById('prevSgst').innerText = '₹' + totals.sgst.toFixed(2);
+      document.getElementById('prevGrandTotal').innerText = '₹' + totals.grandTotal.toFixed(2);
+
+      // Update Customer Payment UPI QR on Invoice
+      const qrImg = document.getElementById('custUpiQrImg');
+      const upiText = document.getElementById('prevUpiIdText');
+      if (appState.bizUpi) {
+        const upiUrl = 'upi://pay?pa=' + encodeURIComponent(appState.bizUpi) +
+                       '&pn=' + encodeURIComponent(appState.bizName || 'Merchant') +
+                       '&am=' + totals.grandTotal.toFixed(2) + '&cu=INR';
+        qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(upiUrl);
+        qrImg.classList.remove('hidden');
+        upiText.innerText = 'UPI ID: ' + appState.bizUpi;
+      } else {
+        qrImg.classList.add('hidden');
+        upiText.innerText = 'Add your UPI ID in Tab 1 to show QR code';
+      }
+
+      // Saved Bills Badge & List
+      document.getElementById('savedCountBadge').innerText = appState.savedBills.length;
+      renderSavedBills();
     }
 
-    function togglePaidStatus(id) {
-      invoiceHistory = invoiceHistory.map(function(inv) {
-        if (inv.id === id) {
-          return Object.assign({}, inv, { paid: !inv.paid });
+    function switchTab(tab) {
+      const tabs = ['edit', 'preview', 'history'];
+      tabs.forEach(function(t) {
+        const sec = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tab) {
+          sec.classList.remove('hidden');
+          btn.className = 'flex-1 py-2.5 text-center border-b-2 border-amber-400 text-amber-300';
+        } else {
+          sec.classList.add('hidden');
+          btn.className = 'flex-1 py-2.5 text-center border-b-2 border-transparent text-blue-200 hover:text-white';
         }
-        return inv;
       });
-      safeSet(STORAGE_HISTORY, JSON.stringify(invoiceHistory));
       renderAll();
     }
 
-    function deleteHistoryItem(id) {
-      invoiceHistory = invoiceHistory.filter(function(inv) { return inv.id !== id; });
-      safeSet(STORAGE_HISTORY, JSON.stringify(invoiceHistory));
-      renderAll();
+    function shareOnWhatsApp() {
+      const totals = calculateTotals();
+      let msg = '*' + (appState.bizName || 'INVOICE') + '*\n';
+      msg += (appState.docTitle || 'TAX INVOICE') + ' #' + (appState.invNumber || '101') + '\n';
+      msg += 'Date: ' + (appState.invDate || '') + '\n';
+      msg += 'Customer: ' + (appState.custName || 'Walk-in') + '\n';
+      msg += '---------------------------\n';
+      appState.items.forEach(function(it, idx) {
+        const lineTotal = (it.qty * it.price) * (1 + it.gst / 100);
+        msg += (idx + 1) + '. ' + it.name + ' (' + it.qty + ' ' + (it.unit || 'pcs') + ' × Unit Price ₹' + it.price + ') = ₹' + lineTotal.toFixed(2) + '\n';
+      });
+      msg += '---------------------------\n';
+      msg += 'Subtotal: ₹' + totals.subtotal.toFixed(2) + '\n';
+      msg += 'Total GST: ₹' + totals.totalGst.toFixed(2) + '\n';
+      msg += '*Grand Total: ₹' + totals.grandTotal.toFixed(2) + '*\n';
+      if (appState.bizUpi) {
+        msg += '\nPay via UPI: ' + appState.bizUpi;
+      }
+      if (!appState.isPro) {
+        msg += '\n\n_Created with GST Invoice & Bill Maker_';
+      }
+
+      const phoneClean = (appState.custPhone || '').replace(/\D/g, '');
+      const waBase = phoneClean.length >= 10
+        ? 'https://wa.me/' + (phoneClean.length === 10 ? '91' + phoneClean : phoneClean)
+        : 'https://wa.me/';
+      window.open(waBase + '?text=' + encodeURIComponent(msg), '_blank');
     }
 
-    function exportHistoryCSV() {
-      if (invoiceHistory.length === 0) {
-        notify('Save at least one invoice first to export CSV');
+    function saveCurrentBill() {
+      const totals = calculateTotals();
+      const record = {
+        id: Date.now(),
+        invNumber: appState.invNumber,
+        invDate: appState.invDate,
+        custName: appState.custName,
+        grandTotal: totals.grandTotal,
+        itemsCount: appState.items.length
+      };
+      appState.savedBills.unshift(record);
+      saveState();
+      renderAll();
+      alert('Invoice #' + appState.invNumber + ' saved to history!');
+    }
+
+    function renderSavedBills() {
+      const box = document.getElementById('savedBillsContainer');
+      if (!box) return;
+      if (appState.savedBills.length === 0) {
+        box.innerHTML = '<div class="text-slate-400 italic py-4 text-center">No saved bills yet. Click "Save Bill" on Tab 1 to store invoices here.</div>';
         return;
       }
-      const headers = ['Invoice Number', 'Type', 'Client Name', 'Date', 'Total Amount', 'Status'];
-      const rows = invoiceHistory.map(function(h) {
-        return [
-          '"' + h.invNo + '"',
-          '"' + h.docType + '"',
-          '"' + h.client.replace(/"/g, '""') + '"',
-          h.date,
-          Math.round(h.amount * 100) / 100,
-          h.paid ? 'PAID' : 'PENDING'
-        ].join(',');
+      let html = '';
+      appState.savedBills.forEach(function(b, idx) {
+        html += '<div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">' +
+                  '<div>' +
+                    '<div class="font-bold text-slate-800">#' + escapeHtml(b.invNumber) + ' — ' + escapeHtml(b.custName) + '</div>' +
+                    '<div class="text-xs text-slate-500">' + escapeHtml(b.invDate) + ' • ' + b.itemsCount + ' items</div>' +
+                  '</div>' +
+                  '<div class="flex items-center gap-3">' +
+                    '<span class="font-extrabold text-blue-900">₹' + Number(b.grandTotal).toFixed(2) + '</span>' +
+                    '<button type="button" onclick="deleteSavedBill(' + idx + ')" class="text-red-500 hover:text-red-700 font-bold">✕</button>' +
+                  '</div>' +
+                '</div>';
       });
-      const csv = [headers.join(',')].concat(rows).join('\n');
+      box.innerHTML = html;
+    }
+
+    function deleteSavedBill(idx) {
+      appState.savedBills.splice(idx, 1);
+      saveState();
+      renderAll();
+    }
+
+    function exportSavedBillsCsv() {
+      if (appState.savedBills.length === 0) {
+        alert('No saved bills to export yet!');
+        return;
+      }
+      let csv = 'Invoice Number,Date,Customer Name,Items Count,Grand Total (INR)\n';
+      appState.savedBills.forEach(function(b) {
+        csv += '"' + b.invNumber + '","' + b.invDate + '","' + b.custName + '",' + b.itemsCount + ',' + Number(b.grandTotal).toFixed(2) + '\n';
+      });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = 'gst_invoices_report.csv';
       a.click();
-      URL.revokeObjectURL(url);
-      notify('Exported invoice history CSV!');
     }
 
-    function shareOnWhatsApp() {
-      const totals = calculateTotals();
-      const invNo = document.getElementById('invNumber').value.trim() || 'INV-101';
-      const invDateVal = document.getElementById('invDate').value.trim() || new Date().toLocaleDateString('en-IN');
-      const client = document.getElementById('clientName').value.trim() || 'Valued Customer';
-      const docType = document.getElementById('docType').value;
-
-      const linesText = lineItems.map(function(item, i) {
-        return (i + 1) + '. ' + item.desc + ' (' + item.qty + ' x ' + fmtMoney(item.price) + ') = ' + fmtMoney(item.qty * item.price);
-      }).join('\n');
-
-      const upiDeepLink = isProUnlocked && bizProfile.upi
-        ? '\nPay Instantly via UPI (' + bizProfile.upi + '): upi://pay?pa=' + encodeURIComponent(bizProfile.upi) + '&pn=' + encodeURIComponent(bizProfile.name) + '&am=' + totals.grandTotal.toFixed(2) + '&cu=INR'
-        : '';
-
-      const watermarkLine = isProUnlocked
-        ? '\nThank you for your business!'
-        : '\n(Created with GST Invoice & Bill Maker)';
-
-      const fullMsg =
-        '*' + docType + ' (#' + invNo + ' • ' + invDateVal + ')*\n' +
-        'From: ' + (bizProfile.name || 'Our Business') + '\n' +
-        'To: ' + client + '\n\n' +
-        '*Items:*\n' + (linesText || 'No items') + '\n\n' +
-        'Subtotal: ' + fmtMoney(totals.subtotal) + '\n' +
-        'Tax: ' + fmtMoney(totals.totalTax) + '\n' +
-        '*Grand Total: ' + fmtMoney(totals.grandTotal) + '*' +
-        upiDeepLink + watermarkLine;
-
-      const waUrl = 'https://wa.me/?text=' + encodeURIComponent(fullMsg);
-      window.open(waUrl, '_blank', 'noopener');
-    }
-
-    // Pro License Key Verification & Seller Key Generator
-    function computeKeyForName(seed) {
-      const clean = (seed || 'CUSTOMER').trim().toUpperCase().replace(/[^A-Z0-9]/g, '') || 'USER';
-      let sum = 2026;
-      for (let i = 0; i < clean.length; i++) {
-        sum = (sum * 33 + clean.charCodeAt(i)) % 9999;
-      }
-      const codeNum = String(1000 + (sum % 9000));
-      return 'GSTPRO-' + clean.slice(0, 4).padEnd(4, 'X') + '-' + codeNum;
-    }
-
-    function generateCustomerKey() {
-      const seed = document.getElementById('customerSeedInput').value;
-      const key = computeKeyForName(seed);
-      const out = document.getElementById('generatedKeyDisplay');
-      out.textContent = 'Customer Key: ' + key + ' (Click Activate above to test!)';
-      document.getElementById('licenseKeyInput').value = key;
-    }
-
-    function activateLicenseKey() {
-      const raw = (document.getElementById('licenseKeyInput').value || '').trim().toUpperCase();
-      if ((raw.startsWith('GSTPRO-') || raw.startsWith('QBPRO-')) && raw.length >= 12) {
-        isProUnlocked = true;
-        safeSet(STORAGE_PRO, 'true');
-        closeProModal();
-        renderAll();
-        notify('GST Invoice & Bill Maker Pro Unlocked! Watermark removed & UPI QR activated.');
-      } else {
-        notify('Invalid Pro Key. Use the Seller Tool below to generate a valid GSTPRO key!');
-      }
-    }
-
+    // Pro Modal & Key Generation Logic
     function openProModal() {
-      document.getElementById('proModal').classList.add('open');
+      const m = document.getElementById('proModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
     }
 
     function closeProModal() {
-      document.getElementById('proModal').classList.remove('open');
+      const m = document.getElementById('proModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
     }
 
-    function handleModalBackdrop(e) {
-      if (e.target && e.target.id === 'proModal') closeProModal();
-    }
-
-    function toggleAdminPanel() {
-      const panel = document.getElementById('adminKeyPanel');
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function renderAll() {
-      const cur = CURRENCIES[currentCurrency];
-      const totals = calculateTotals();
-      const docType = document.getElementById('docType').value;
-      const invNo = document.getElementById('invNumber').value.trim() || 'INV-101';
-      const invDateVal = document.getElementById('invDate').value.trim() || new Date().toLocaleDateString('en-IN');
-      const clientName = document.getElementById('clientName').value.trim() || 'Walk-in Customer';
-      const clientPhone = document.getElementById('clientPhone').value.trim();
-
-      document.getElementById('curSelect').value = currentCurrency;
-      document.getElementById('docTypeLabel').textContent = 'Current ' + docType;
-      document.getElementById('heroGrandTotal').textContent = fmtMoney(totals.grandTotal);
-      document.getElementById('heroSubNote').textContent = lineItems.length + (lineItems.length === 1 ? ' item' : ' items') + ' • ' + cur.taxLabel;
-
-      // Update Pro UI state
-      const planPill = document.getElementById('planPill');
-      const proBtn = document.getElementById('proBtn');
-      const watermark = document.getElementById('previewWatermark');
-      const qrLockBtn = document.getElementById('qrProLockBtn');
-
-      if (isProUnlocked) {
-        planPill.textContent = 'PRO EDITION UNLOCKED';
-        planPill.classList.add('pro');
-        proBtn.textContent = 'Pro Active ✓';
-        proBtn.classList.add('unlocked');
-        watermark.style.display = 'none';
-        qrLockBtn.style.display = 'none';
-      } else {
-        planPill.textContent = 'FREE EDITION';
-        planPill.classList.remove('pro');
-        proBtn.textContent = 'Unlock Pro (' + '\u20B9299 / $9)';
-        proBtn.classList.remove('unlocked');
-        watermark.style.display = 'block';
-        qrLockBtn.style.display = 'inline-block';
+    function makeKeyFromSeed(seedText) {
+      const clean = String(seedText || 'USER').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      const prefix = (clean + 'XXXX').substring(0, 4);
+      let hash = 0;
+      for (let i = 0; i < clean.length; i++) {
+        hash = (hash * 31 + clean.charCodeAt(i)) % 9000;
       }
+      const num = 1000 + Math.abs(hash);
+      return 'GSTPRO-' + prefix + '-' + num;
+    }
 
-      // Render Line Items in Editor
-      const listEl = document.getElementById('lineItemsContainer');
-      if (lineItems.length === 0) {
-        listEl.innerHTML = '<div style="text-align:center; padding:18px; color:var(--muted); font-size:13px;">No items on this bill yet. Tap a preset above or add an item!</div>';
-      } else {
-        listEl.innerHTML = lineItems.map(function(item) {
-          const base = item.qty * item.price;
-          return (
-            '<div class="line-card">' +
-              '<div class="line-left">' +
-                '<div class="line-name">' + item.desc + '</div>' +
-                '<div class="line-meta">' + item.qty + ' × ' + fmtMoney(item.price) + ' • Tax: ' + item.taxPct + '%</div>' +
-              '</div>' +
-              '<div class="line-right">' +
-                '<span class="line-total">' + fmtMoney(base) + '</span>' +
-                '<button class="btn-del-line" onclick="removeLineItem(' + item.id + ')">×</button>' +
-              '</div>' +
-            '</div>'
-          );
-        }).join('');
+    function verifyUtrAndAutoUnlock() {
+      const shop = document.getElementById('utrBizNameInput').value.trim() || appState.bizName || 'SHOP';
+      const utr = document.getElementById('utrNumberInput').value.replace(/\D/g, '');
+      if (utr.length !== 12) {
+        alert('Please enter a valid 12-digit UPI Reference / UTR number from your UPI payment screen.');
+        return;
       }
+      const generatedKey = makeKeyFromSeed(shop + utr.slice(-4));
+      appState.isPro = true;
+      appState.proKey = generatedKey;
+      saveState();
+      renderAll();
 
-      // Render Printable Invoice Preview
-      const badgeText = (bizProfile.logo || computeAutoInitials(bizProfile.name) || 'GST').slice(0, 4).toUpperCase();
-      document.getElementById('previewLogo').textContent = badgeText;
-      document.getElementById('brandIcon').textContent = 'GST';
-      document.getElementById('previewBizName').textContent = bizProfile.name || 'Your Business Name';
-      document.getElementById('previewBizSub').textContent = bizProfile.phone || 'Your Phone • City';
-      document.getElementById('previewBizTax').textContent = bizProfile.gst ? ('GSTIN / Tax ID: ' + bizProfile.gst) : '';
+      const resBox = document.getElementById('autoKeyResultBox');
+      resBox.classList.remove('hidden');
+      resBox.innerHTML = '🎉 Payment Ref Verified!<br>Your Lifetime Pass Key: <span class="font-mono underline">' + generatedKey + '</span><br>Pro Features are now UNLOCKED!';
+    }
 
-      document.getElementById('previewDocTitle').textContent = docType;
-      document.getElementById('previewInvNo').textContent = invNo;
-      document.getElementById('previewDate').textContent = invDateVal;
-      document.getElementById('previewClientName').textContent = clientName;
-      document.getElementById('previewClientPhone').textContent = clientPhone || 'Click to add phone / address';
-
-      const tbody = document.getElementById('previewTableBody');
-      tbody.innerHTML = lineItems.map(function(item) {
-        const lineSub = item.qty * item.price;
-        const lineTax = lineSub * (item.taxPct / 100);
-        return (
-          '<tr>' +
-            '<td><strong>' + item.desc + '</strong></td>' +
-            '<td class="num">' + item.qty + '</td>' +
-            '<td class="num">' + fmtMoney(item.price) + '</td>' +
-            '<td class="num">' + item.taxPct + '% (' + fmtMoney(lineTax) + ')</td>' +
-            '<td class="num"><strong>' + fmtMoney(lineSub + lineTax) + '</strong></td>' +
-          '</tr>'
-        );
-      }).join('');
-
-      document.getElementById('previewSubtotal').textContent = fmtMoney(totals.subtotal);
-      document.getElementById('previewDiscRow').style.display = totals.discountAmt > 0 ? 'flex' : 'none';
-      document.getElementById('previewDiscount').textContent = '-' + fmtMoney(totals.discountAmt) + ' (' + totals.discPct + '%)';
-      document.getElementById('previewTaxLabel').textContent = cur.taxLabel + ':';
-      document.getElementById('previewTaxAmt').textContent = fmtMoney(totals.totalTax);
-      document.getElementById('previewGrandTotal').textContent = fmtMoney(totals.grandTotal);
-
-      // Render UPI QR SVG
-      const upiPayload = 'upi://pay?pa=' + (bizProfile.upi || 'merchant@upi') + '&am=' + totals.grandTotal.toFixed(2);
-      document.getElementById('qrSvgHolder').innerHTML = buildVisualQrSvg(upiPayload);
-      document.getElementById('qrUpiText').textContent = isProUnlocked
-        ? ('UPI ID: ' + bizProfile.upi + ' • Exact Amount: ' + fmtMoney(totals.grandTotal))
-        : ('Preview QR • Unlock Pro to embed your live UPI ID (' + (bizProfile.upi || 'merchant@upi') + ')');
-
-      // Render History & Scoreboard Totals
-      let paidSum = 0;
-      let paidCnt = 0;
-      let pendSum = 0;
-      let pendCnt = 0;
-      invoiceHistory.forEach(function(h) {
-        if (h.paid) {
-          paidSum += h.amount;
-          paidCnt++;
-        } else {
-          pendSum += h.amount;
-          pendCnt++;
-        }
-      });
-
-      document.getElementById('paidTotalStat').textContent = fmtMoney(paidSum);
-      document.getElementById('paidCountStat').textContent = paidCnt + (paidCnt === 1 ? ' paid bill' : ' paid bills');
-      document.getElementById('pendingTotalStat').textContent = fmtMoney(pendSum);
-      document.getElementById('pendingCountStat').textContent = pendCnt + ' pending';
-
-      const histEl = document.getElementById('historyListContainer');
-      if (invoiceHistory.length === 0) {
-        histEl.innerHTML = '<div style="text-align:center; padding:18px; color:var(--muted); font-size:13px;">No saved invoices yet. Click "Save Bill" to track paid and pending client bills!</div>';
+    function activateManualKey() {
+      const val = document.getElementById('manualKeyInput').value.trim().toUpperCase();
+      if (val.indexOf('GSTPRO-') === 0 && val.length >= 12) {
+        appState.isPro = true;
+        appState.proKey = val;
+        saveState();
+        renderAll();
+        closeProModal();
+        alert('Pro Edition Unlocked Successfully!');
       } else {
-        histEl.innerHTML = invoiceHistory.map(function(h) {
-          const statusColor = h.paid ? 'var(--emerald)' : 'var(--amber)';
-          const statusLabel = h.paid ? 'PAID ✓' : 'MARK PAID';
-          return (
-            '<div class="line-card">' +
-              '<div class="line-left">' +
-                '<div class="line-name">' + h.client + ' <span style="font-size:11px; color:var(--muted);">(' + h.invNo + ')</span></div>' +
-                '<div class="line-meta">' + h.docType + ' • ' + h.date + '</div>' +
-              '</div>' +
-              '<div class="line-right">' +
-                '<span class="line-total">' + fmtMoney(h.amount) + '</span>' +
-                '<button class="preset-btn" style="color:' + statusColor + '; border-color:' + statusColor + ';" onclick="togglePaidStatus(' + h.id + ')">' + statusLabel + '</button>' +
-                '<button class="btn-del-line" onclick="deleteHistoryItem(' + h.id + ')">×</button>' +
-              '</div>' +
-            '</div>'
-          );
-        }).join('');
+        alert('Invalid Pass Key format. Key must start with GSTPRO-XXXX-XXXX.');
       }
     }
 
-    // Initialize default invoice date & business profile inputs
-    document.getElementById('invDate').value = new Date().toLocaleDateString('en-IN');
-    populateBizInputs();
-    applyTheme();
-    renderAll();
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js').catch(function() {});
-      });
+    function toggleSellerTool() {
+      const box = document.getElementById('sellerToolBox');
+      box.classList.toggle('hidden');
     }
+
+    function generateSellerKey() {
+      const cust = document.getElementById('sellerCustomerInput').value.trim() || 'CUST';
+      const key = makeKeyFromSeed(cust);
+      document.getElementById('sellerKeyOutput').innerText = 'Customer Key: ' + key;
+    }
+
+    // Initialize App on Load
+    window.addEventListener('DOMContentLoaded', function() {
+      loadState();
+      populateFormFromState();
+      renderCatalogChips('');
+      renderAll();
+    });
   </script>
 </body>
 </html>
