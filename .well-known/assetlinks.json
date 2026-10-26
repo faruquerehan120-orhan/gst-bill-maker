@@ -1,8 +1,12 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "io.github.faruquerehan120.gstbill",
-        "sha256_cert_fingerprints": ["8A:6D:3C:F0:68:9A:7E:1A:DD:76:F4:88:36:43:CB:B3:B9:97:61:C0:7C:F6:76:6A:23:F3:75:88:5D:78:83:F5"]
-      }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.faruquerehan120.gstbill",
+      "sha256_cert_fingerprints": [
+        "8A:6D:3C:F0:68:9A:7E:1A:DD:76:F4:88:36:43:CB:B3:B9:97:61:C0:7C:F6:76:6A:23:F3:75:88:5D:78:83:F5"
+      ]
+    }
+  }
+]
