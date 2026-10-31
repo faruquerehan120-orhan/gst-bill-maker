@@ -1210,43 +1210,42 @@
       renderAll();
     });
   </script>
-  <!-- === WATERMARK & SHARE APP UPGRADE START === -->
+ <!-- === PRINT-ONLY FREE WATERMARK & SHARE APP UPGRADE START === -->
 <style>
-  /* 1. Diagonal Center Watermark Styling */
+  /* 1. Completely hidden on the normal screen while typing/selecting items */
   .invoice-watermark-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    font-size: 54px;
-    font-weight: 900;
-    color: rgba(0, 0, 0, 0.06); /* Subtle professional grey */
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    white-space: nowrap;
-    pointer-events: none; /* Lets users click right through it */
-    user-select: none;
-    z-index: 10;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    display: none !important;
   }
 
-  /* Ensure watermark shows up clearly on Printed A4 / PDF */
+  /* 2. Appears ONLY on the Printed A4 / PDF page (and ONLY if Free Version) */
   @media print {
-    .invoice-watermark-overlay {
-      color: rgba(0, 0, 0, 0.07) !important;
+    body:not(.pro-unlocked) .invoice-watermark-overlay.free-user-watermark {
+      display: block !important;
       position: fixed;
       top: 50%;
       left: 50%;
+      transform: translate(-50%, -50%) rotate(-35deg);
+      font-size: 52px;
+      font-weight: 900;
+      color: rgba(0, 0, 0, 0.08) !important;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
+
     .no-print-share-btn {
       display: none !important;
     }
   }
 
-  /* 2. Floating Share App Button Styling */
+  /* 3. Floating Share App Button Styling */
   .no-print-share-btn {
     position: fixed;
     bottom: 20px;
@@ -1274,32 +1273,43 @@
   }
 </style>
 
+<!-- Print-Only Watermark Element -->
+<div id="dynamicWatermark" class="invoice-watermark-overlay free-user-watermark">
+  FREE VERSION - GST BILL MAKER
+</div>
+
 <!-- Floating Share Button HTML -->
 <button class="no-print-share-btn" onclick="shareGstApp()">
   <span>📤</span> Share App
 </button>
 
 <script>
-  // 1. Automatically attach the Watermark to the Invoice Box
-  window.addEventListener('DOMContentLoaded', function() {
-    // Finds your main invoice container or falls back to body
-    const invoiceContainer = document.querySelector('#invoice, .invoice-box, .invoice-container, .page, main') || document.body;
-    
-    if (invoiceContainer !== document.body) {
-      invoiceContainer.style.position = 'relative';
+  // Checks if user has unlocked Pro; if Pro is active, removes watermark from Print too
+  function syncWatermarkWithProStatus() {
+    const watermark = document.getElementById('dynamicWatermark');
+    if (!watermark) return;
+
+    // Checks common localStorage keys or global variables used for Pro status
+    const isPro = (
+      localStorage.getItem('isPro') === 'true' ||
+      localStorage.getItem('gst_pro_unlocked') === 'true' ||
+      localStorage.getItem('proUnlocked') === 'true' ||
+      window.isPro === true ||
+      document.body.innerText.includes('Pro Active') ||
+      document.body.innerText.includes('PRO UNLOCKED')
+    );
+
+    if (isPro) {
+      watermark.classList.remove('free-user-watermark');
+    } else {
+      watermark.classList.add('free-user-watermark');
     }
+  }
 
-    const watermark = document.createElement('div');
-    watermark.className = 'invoice-watermark-overlay';
-    watermark.id = 'dynamicWatermark';
-    
-    // Default watermark text (You can change this text to anything you want!)
-    watermark.innerText = 'TAX INVOICE';
-    
-    invoiceContainer.appendChild(watermark);
-  });
+  window.addEventListener('DOMContentLoaded', syncWatermarkWithProStatus);
+  window.addEventListener('beforeprint', syncWatermarkWithProStatus);
 
-  // 2. Universal Share Function (Works across WhatsApp, Telegram, Email, SMS, etc.)
+  // Universal Share Function
   async function shareGstApp() {
     const shareData = {
       title: 'GST Invoice, Quotation & Bill Maker',
@@ -1307,7 +1317,6 @@
       url: 'https://faruquerehan120-orhan.github.io/gst-bill-maker/'
     };
 
-    // Opens the native mobile/desktop Share Sheet (WhatsApp, Facebook, Email, Bluetooth, etc.)
     if (navigator.share) {
       try {
         await navigator.share(shareData);
@@ -1315,7 +1324,6 @@
         console.log('Share canceled');
       }
     } else {
-      // Fallback for older laptops: Copies link and offers WhatsApp Web
       navigator.clipboard.writeText(shareData.url);
       const openWa = confirm('App link copied to clipboard!\n\nClick OK to share directly on WhatsApp, or Cancel to paste the link anywhere.');
       if (openWa) {
@@ -1324,6 +1332,6 @@
     }
   }
 </script>
-<!-- === WATERMARK & SHARE APP UPGRADE END === -->
+<!-- === PRINT-ONLY FREE WATERMARK & SHARE APP UPGRADE END === -->
 </body>
 </html>
