@@ -1210,42 +1210,67 @@
       renderAll();
     });
   </script>
- <!-- === PRINT-ONLY FREE WATERMARK & SHARE APP UPGRADE START === -->
+ <!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE START === -->
 <style>
-  /* 1. Completely hidden on the normal screen while typing/selecting items */
-  .invoice-watermark-overlay {
-    display: none !important;
+  /* 1. Hide watermark on normal screen */
+  #centerPrintWatermark {
+    display: none;
   }
 
-  /* 2. Appears ONLY on the Printed A4 / PDF page (and ONLY if Free Version) */
+  /* 2. Remove browser GitHub link (footer) and Date/Title (header) from PDF */
+  @page {
+    size: A4;
+    margin: 0mm !important;
+  }
+
   @media print {
-    body:not(.pro-unlocked) .invoice-watermark-overlay.free-user-watermark {
+    body {
+      margin: 12mm !important; /* Keeps clean paper padding after removing browser headers/footers */
+    }
+
+    /* 3. Diagonal Center Watermark ONLY on Print/PDF for Free Version */
+    #centerPrintWatermark.active-free-watermark {
       display: block !important;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-35deg);
-      font-size: 52px;
-      font-weight: 900;
-      color: rgba(0, 0, 0, 0.08) !important;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      text-align: center;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: fixed !important;
+      top: 48% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(-35deg) !important;
+      font-size: 46px !important;
+      font-weight: 900 !important;
+      color: rgba(15, 23, 42, 0.10) !important;
+      border: 4px solid rgba(15, 23, 42, 0.10) !important;
+      padding: 10px 28px !important;
+      border-radius: 12px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 4px !important;
+      white-space: nowrap !important;
+      pointer-events: none !important;
+      z-index: 2147483647 !important;
+      font-family: Arial, Helvetica, sans-serif !important;
+      text-align: center !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
+    #centerPrintWatermark.active-free-watermark span {
+      display: block !important;
+      visibility: visible !important;
+      font-size: 16px !important;
+      letter-spacing: 2px !important;
+      margin-top: 4px !important;
+      font-weight: 700 !important;
+    }
+
+    /* Hide Share button when printing */
     .no-print-share-btn {
       display: none !important;
+      visibility: hidden !important;
     }
   }
 
-  /* 3. Floating Share App Button Styling */
+  /* 4. Floating Share App Button Styling */
   .no-print-share-btn {
     position: fixed;
     bottom: 20px;
@@ -1273,43 +1298,43 @@
   }
 </style>
 
-<!-- Print-Only Watermark Element -->
-<div id="dynamicWatermark" class="invoice-watermark-overlay free-user-watermark">
-  FREE VERSION - GST BILL MAKER
-</div>
-
-<!-- Floating Share Button HTML -->
+<!-- Floating Share Button -->
 <button class="no-print-share-btn" onclick="shareGstApp()">
   <span>📤</span> Share App
 </button>
 
 <script>
-  // Checks if user has unlocked Pro; if Pro is active, removes watermark from Print too
-  function syncWatermarkWithProStatus() {
-    const watermark = document.getElementById('dynamicWatermark');
-    if (!watermark) return;
+  function setupPrintWatermark() {
+    let wm = document.getElementById('centerPrintWatermark');
+    if (!wm) {
+      wm = document.createElement('div');
+      wm.id = 'centerPrintWatermark';
+      wm.innerHTML = 'FREE VERSION<span>Unlock Pro to Remove Watermark</span>';
+      
+      const printArea = document.querySelector('#invoicePreview, #printArea, .invoice-preview, .invoice-box, .print-area') || document.body;
+      printArea.appendChild(wm);
+    }
 
-    // Checks common localStorage keys or global variables used for Pro status
-    const isPro = (
+    const isProUnlocked = (
       localStorage.getItem('isPro') === 'true' ||
       localStorage.getItem('gst_pro_unlocked') === 'true' ||
       localStorage.getItem('proUnlocked') === 'true' ||
       window.isPro === true ||
-      document.body.innerText.includes('Pro Active') ||
-      document.body.innerText.includes('PRO UNLOCKED')
+      document.body.innerText.includes('Pro Unlocked') ||
+      document.body.innerText.includes('PRO ACTIVE')
     );
 
-    if (isPro) {
-      watermark.classList.remove('free-user-watermark');
+    if (isProUnlocked) {
+      wm.classList.remove('active-free-watermark');
     } else {
-      watermark.classList.add('free-user-watermark');
+      wm.classList.add('active-free-watermark');
     }
   }
 
-  window.addEventListener('DOMContentLoaded', syncWatermarkWithProStatus);
-  window.addEventListener('beforeprint', syncWatermarkWithProStatus);
+  window.addEventListener('DOMContentLoaded', setupPrintWatermark);
+  window.addEventListener('beforeprint', setupPrintWatermark);
+  setInterval(setupPrintWatermark, 1500);
 
-  // Universal Share Function
   async function shareGstApp() {
     const shareData = {
       title: 'GST Invoice, Quotation & Bill Maker',
@@ -1332,6 +1357,6 @@
     }
   }
 </script>
-<!-- === PRINT-ONLY FREE WATERMARK & SHARE APP UPGRADE END === -->
+<!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE END === -->
 </body>
 </html>
