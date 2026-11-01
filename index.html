@@ -1358,5 +1358,212 @@
   }
 </script>
 <!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE END === -->
+  <!-- === COMPLETE PRO COMMERCIAL SUITE UPGRADE START === -->
+<style>
+  /* 1. Pro Control Panel Styling (Hidden on Print) */
+  #proSuiteToolbar {
+    max-width: 1100px;
+    margin: 14px auto;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: system-ui, -apple-system, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .pro-suite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  .pro-suite-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pro-suite-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .pro-suite-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .pro-suite-field input, .pro-suite-field select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    box-sizing: border-box;
+  }
+  .pro-suite-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .pro-btn {
+    border: none;
+    border-radius: 7px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pro-btn-wa { background: #16a34a; color: #fff; }
+  .pro-btn-save { background: #2563eb; color: #fff; }
+  .pro-btn-pos { background: #475569; color: #fff; }
+  .pro-btn-hist { background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; }
+
+  /* Recent Bills Drawer */
+  #proHistoryBox {
+    display: none;
+    margin-top: 12px;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    max-height: 180px;
+    overflow-y: auto;
+    font-size: 12px;
+  }
+
+  /* 2. Injected Invoice Compliance Elements */
+  .pro-meta-line {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 3px;
+  }
+  #proAmountWordsBox {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-left: 3px solid #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+  #proSignatoryBox {
+    margin-top: 18px;
+    text-align: right;
+    font-size: 12px;
+    color: #1e293b;
+  }
+  .pro-sign-space {
+    display: inline-block;
+    min-width: 170px;
+    border-top: 1.5px solid #334155;
+    padding-top: 4px;
+    margin-top: 32px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* 3. Thermal 3-Inch (80mm) Receipt Mode */
+  body.thermal-pos-mode #invoicePreview,
+  body.thermal-pos-mode #printArea,
+  body.thermal-pos-mode .invoice-preview,
+  body.thermal-pos-mode .invoice-box {
+    max-width: 80mm !important;
+    width: 80mm !important;
+    margin: 0 auto !important;
+    padding: 4mm !important;
+    font-size: 11px !important;
+  }
+
+  /* 4. Clean Print & Center Watermark Rules */
+  #centerPrintWatermark { display: none; }
+
+  @page {
+    size: auto;
+    margin: 0mm !important;
+  }
+
+  @media print {
+    body { margin: 10mm !important; }
+    body.thermal-pos-mode { margin: 2mm !important; }
+    #proSuiteToolbar, .no-print-share-btn {
+      display: none !important;
+      visibility: hidden !important;
+    }
+    #centerPrintWatermark.active-free-watermark {
+      display: block !important;
+      visibility: visible !important;
+      position: fixed !important;
+      top: 48% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(-35deg) !important;
+      font-size: 44px !important;
+      font-weight: 900 !important;
+      color: rgba(15, 23, 42, 0.10) !important;
+      border: 4px solid rgba(15, 23, 42, 0.10) !important;
+      padding: 10px 26px !important;
+      border-radius: 12px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 4px !important;
+      white-space: nowrap !important;
+      pointer-events: none !important;
+      z-index: 2147483647 !important;
+      text-align: center !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    #centerPrintWatermark.active-free-watermark span {
+      display: block !important;
+      font-size: 15px !important;
+      margin-top: 4px !important;
+    }
+  }
+
+  /* 5. Floating Share Button */
+  .no-print-share-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+  }
+</style>
+
+<!-- Floating Share App Button -->
+<button class="no-print-share-btn" onclick="shareGstApp()">
+  <span>📤</span> Share App
+</button>
+
+<script>
+(function() {
+  // --- Helper: Convert Number to Indian Rupees in Words ---
+  function numberToIndianWords(num) {
+    num = Math.round(Number(num) || 0);
 </body>
 </html>
