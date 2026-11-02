@@ -485,7 +485,7 @@
         <!-- STEP 2: AUTOMATIC PASS KEY VERIFICATION VIA 12-DIGIT UTR -->
         <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 space-y-2">
           <div class="font-extrabold text-blue-950 text-xs uppercase tracking-wider">
-            Step 2: Instant Automatic Pass Key
+            Step 2: Activation
           </div>
           <p class="text-[11px] text-blue-800">
             After paying ₹299, enter your Shop Name and the <strong>12-digit UPI Ref / UTR Number</strong> from your payment screen to automatically generate your Pass Key & unlock Pro immediately:
@@ -509,23 +509,7 @@
           </div>
         </div>
 
-        <!-- SELLER ADMIN GENERATOR (COLLAPSIBLE) -->
-        <div class="pt-2 border-t border-slate-100 text-right">
-          <button type="button" onclick="toggleSellerTool()" class="text-[11px] text-slate-400 hover:text-slate-600 underline">
-            Open Seller Tool
-          </button>
-          <div id="sellerToolBox" class="hidden mt-2 bg-slate-100 p-3 rounded-lg text-left space-y-2">
-            <div class="text-[11px] font-bold text-slate-700">Seller Key Generator (For Customer Support)</div>
-            <div class="flex gap-2">
-              <input type="text" id="sellerCustomerInput" placeholder="Customer Name or Phone" class="flex-1 border border-slate-300 rounded px-2 py-1 text-xs bg-white" />
-              <button type="button" onclick="generateSellerKey()" class="bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded">
-                Generate Key
-              </button>
-            </div>
-            <div id="sellerKeyOutput" class="font-mono font-extrabold text-xs text-blue-900"></div>
-          </div>
-        </div>
-      </div>
+       
     </div>
   </div>
 
@@ -695,13 +679,7 @@
         console.warn('Could not load saved state:', e);
       }
 
-      // Check URL auto-redirect unlock (?pro_unlock=1)
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('pro_unlock') === '1') {
-        appState.isPro = true;
-        appState.proKey = 'GSTPRO-AUTO-PAID';
-        saveState();
-      }
+     
     }
 
     function saveState() {
@@ -1159,7 +1137,13 @@
       return 'GSTPRO-' + prefix + '-' + num;
     }
 
-    function verifyUtrAndAutoUnlock() {
+        function verifyUtrAndAutoUnlock() {
+      alert('Pro activation is being upgraded. Please send your payment screenshot on WhatsApp and we will activate Pro for you.');
+    }
+
+    function activateManualKey() {
+      alert('Pro activation is being upgraded. Please check back soon.');
+    }
       const shop = document.getElementById('utrBizNameInput').value.trim() || appState.bizName || 'SHOP';
       const utr = document.getElementById('utrNumberInput').value.replace(/\D/g, '');
       if (utr.length !== 12) {
@@ -1177,7 +1161,13 @@
       resBox.innerHTML = '🎉 Payment Ref Verified!<br>Your Lifetime Pass Key: <span class="font-mono underline">' + generatedKey + '</span><br>Pro Features are now UNLOCKED!';
     }
 
+        function verifyUtrAndAutoUnlock() {
+      alert('Pro activation is being upgraded. Please send your payment screenshot on WhatsApp and we will activate Pro for you.');
+    }
+
     function activateManualKey() {
+      alert('Pro activation is being upgraded. Please check back soon.');
+    }
       const val = document.getElementById('manualKeyInput').value.trim().toUpperCase();
       if (val.indexOf('GSTPRO-') === 0 && val.length >= 12) {
         appState.isPro = true;
