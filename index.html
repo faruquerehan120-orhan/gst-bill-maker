@@ -485,7 +485,7 @@
         <!-- STEP 2: AUTOMATIC PASS KEY VERIFICATION VIA 12-DIGIT UTR -->
         <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 space-y-2">
           <div class="font-extrabold text-blue-950 text-xs uppercase tracking-wider">
-            Step 2: Activation
+            Step 2: Instant Automatic Pass Key
           </div>
           <p class="text-[11px] text-blue-800">
             After paying ₹299, enter your Shop Name and the <strong>12-digit UPI Ref / UTR Number</strong> from your payment screen to automatically generate your Pass Key & unlock Pro immediately:
@@ -509,7 +509,23 @@
           </div>
         </div>
 
-       
+        <!-- SELLER ADMIN GENERATOR (COLLAPSIBLE) -->
+        <div class="pt-2 border-t border-slate-100 text-right">
+          <button type="button" onclick="toggleSellerTool()" class="text-[11px] text-slate-400 hover:text-slate-600 underline">
+            Open Seller Tool
+          </button>
+          <div id="sellerToolBox" class="hidden mt-2 bg-slate-100 p-3 rounded-lg text-left space-y-2">
+            <div class="text-[11px] font-bold text-slate-700">Seller Key Generator (For Customer Support)</div>
+            <div class="flex gap-2">
+              <input type="text" id="sellerCustomerInput" placeholder="Customer Name or Phone" class="flex-1 border border-slate-300 rounded px-2 py-1 text-xs bg-white" />
+              <button type="button" onclick="generateSellerKey()" class="bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded">
+                Generate Key
+              </button>
+            </div>
+            <div id="sellerKeyOutput" class="font-mono font-extrabold text-xs text-blue-900"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -679,7 +695,13 @@
         console.warn('Could not load saved state:', e);
       }
 
-     
+      // Check URL auto-redirect unlock (?pro_unlock=1)
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('pro_unlock') === '1') {
+        appState.isPro = true;
+        appState.proKey = 'GSTPRO-AUTO-PAID';
+        saveState();
+      }
     }
 
     function saveState() {
@@ -1137,13 +1159,7 @@
       return 'GSTPRO-' + prefix + '-' + num;
     }
 
-        function verifyUtrAndAutoUnlock() {
-      alert('Pro activation is being upgraded. Please send your payment screenshot on WhatsApp and we will activate Pro for you.');
-    }
-
-    function activateManualKey() {
-      alert('Pro activation is being upgraded. Please check back soon.');
-    }
+    function verifyUtrAndAutoUnlock() {
       const shop = document.getElementById('utrBizNameInput').value.trim() || appState.bizName || 'SHOP';
       const utr = document.getElementById('utrNumberInput').value.replace(/\D/g, '');
       if (utr.length !== 12) {
@@ -1161,13 +1177,7 @@
       resBox.innerHTML = '🎉 Payment Ref Verified!<br>Your Lifetime Pass Key: <span class="font-mono underline">' + generatedKey + '</span><br>Pro Features are now UNLOCKED!';
     }
 
-        function verifyUtrAndAutoUnlock() {
-      alert('Pro activation is being upgraded. Please send your payment screenshot on WhatsApp and we will activate Pro for you.');
-    }
-
     function activateManualKey() {
-      alert('Pro activation is being upgraded. Please check back soon.');
-    }
       const val = document.getElementById('manualKeyInput').value.trim().toUpperCase();
       if (val.indexOf('GSTPRO-') === 0 && val.length >= 12) {
         appState.isPro = true;
@@ -1200,146 +1210,5 @@
       renderAll();
     });
   </script>
-<!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE START === -->
-<style>
-  /* 1. Hide watermark on normal screen */
-  #centerPrintWatermark {
-    display: none;
-  }
-
-  /* 2. Remove browser GitHub link (footer) and Date/Title (header) from PDF */
-  @page {
-    size: A4;
-    margin: 0mm !important;
-  }
-
-  @media print {
-    body {
-      margin: 12mm !important; /* Keeps clean paper padding after removing browser headers/footers */
-    }
-
-    /* 3. Diagonal Center Watermark ONLY on Print/PDF for Free Version */
-    #centerPrintWatermark.active-free-watermark {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: fixed !important;
-      top: 48% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) rotate(-35deg) !important;
-      font-size: 46px !important;
-      font-weight: 900 !important;
-      color: rgba(15, 23, 42, 0.10) !important;
-      border: 4px solid rgba(15, 23, 42, 0.10) !important;
-      padding: 10px 28px !important;
-      border-radius: 12px !important;
-      text-transform: uppercase !important;
-      letter-spacing: 4px !important;
-      white-space: nowrap !important;
-      pointer-events: none !important;
-      z-index: 2147483647 !important;
-      font-family: Arial, Helvetica, sans-serif !important;
-      text-align: center !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    #centerPrintWatermark.active-free-watermark span {
-      display: block !important;
-      visibility: visible !important;
-      font-size: 16px !important;
-      letter-spacing: 2px !important;
-      margin-top: 4px !important;
-      font-weight: 700 !important;
-    }
-
-    /* Hide Share button when printing */
-    .no-print-share-btn {
-      display: none !important;
-      visibility: hidden !important;
-    }
-  }
-
-  /* 4. Floating Share App Button Styling */
-  .no-print-share-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 9999;
-    font-family: sans-serif;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .no-print-share-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
-  }
-</style>
-
-<!-- Floating Share Button -->
-<button class="no-print-share-btn" onclick="shareGstApp()">
-  <span>📤</span> Share App
-</button>
-
-<script>
-  function setupPrintWatermark() {
-    let wm = document.getElementById('centerPrintWatermark');
-    if (!wm) {
-      wm = document.createElement('div');
-      wm.id = 'centerPrintWatermark';
-      wm.innerHTML = 'FREE VERSION<span>Unlock Pro to Remove Watermark</span>';
-      
-      const printArea = document.querySelector('#invoicePreview, #printArea, .invoice-preview, .invoice-box, .print-area') || document.body;
-      printArea.appendChild(wm);
-    }
-
-       const isProUnlocked = (typeof appState !== 'undefined' && appState.isPro === true);
-
-    if (isProUnlocked) {
-      wm.classList.remove('active-free-watermark');
-    } else {
-      wm.classList.add('active-free-watermark');
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', setupPrintWatermark);
-  window.addEventListener('beforeprint', setupPrintWatermark);
-  setInterval(setupPrintWatermark, 1500);
-
-  async function shareGstApp() {
-    const shareData = {
-      title: 'GST Invoice, Quotation & Bill Maker',
-      text: 'Create professional GST Invoices, Quotations & Bills in seconds on mobile or PC! Try this app:',
-      url: 'https://faruquerehan120-orhan.github.io/gst-bill-maker/'
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        console.log('Share canceled');
-      }
-    } else {
-      navigator.clipboard.writeText(shareData.url);
-      const openWa = confirm('App link copied to clipboard!\n\nClick OK to share directly on WhatsApp, or Cancel to paste the link anywhere.');
-      if (openWa) {
-        window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareData.text + ' ' + shareData.url), '_blank');
-      }
-    }
-  }
-</script>
-<!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE END === -->
 </body>
 </html>
