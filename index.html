@@ -1315,14 +1315,7 @@
       printArea.appendChild(wm);
     }
 
-    const isProUnlocked = (
-      localStorage.getItem('isPro') === 'true' ||
-      localStorage.getItem('gst_pro_unlocked') === 'true' ||
-      localStorage.getItem('proUnlocked') === 'true' ||
-      window.isPro === true ||
-      document.body.innerText.includes('Pro Unlocked') ||
-      document.body.innerText.includes('PRO ACTIVE')
-    );
+       const isProUnlocked = (typeof appState !== 'undefined' && appState.isPro === true);
 
     if (isProUnlocked) {
       wm.classList.remove('active-free-watermark');
