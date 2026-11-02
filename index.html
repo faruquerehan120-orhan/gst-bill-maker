@@ -1358,152 +1358,21 @@
   }
 </script>
 <!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE END === -->
-  <!-- === COMPLETE PRO COMMERCIAL SUITE UPGRADE START === -->
+ <!-- === PROFESSIONAL GST BILL MAKER MASTER UPGRADE START === -->
 <style>
-  /* 1. Pro Control Panel Styling (Hidden on Print) */
-  #proSuiteToolbar {
-    max-width: 1100px;
-    margin: 14px auto;
-    background: #ffffff;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 16px;
-    font-family: system-ui, -apple-system, sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-  .pro-suite-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-  }
-  .pro-suite-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1e293b;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .pro-suite-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .pro-suite-field label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    color: #475569;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-  }
-  .pro-suite-field input, .pro-suite-field select {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 13px;
-    box-sizing: border-box;
-  }
-  .pro-suite-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
-  .pro-btn {
-    border: none;
-    border-radius: 7px;
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .pro-btn-wa { background: #16a34a; color: #fff; }
-  .pro-btn-save { background: #2563eb; color: #fff; }
-  .pro-btn-pos { background: #475569; color: #fff; }
-  .pro-btn-hist { background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; }
-
-  /* Recent Bills Drawer */
-  #proHistoryBox {
-    display: none;
-    margin-top: 12px;
-    padding: 10px;
-    background: #f8fafc;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    max-height: 180px;
-    overflow-y: auto;
-    font-size: 12px;
-  }
-
-  /* 2. Injected Invoice Compliance Elements */
-  .pro-meta-line {
-    font-size: 12px;
-    font-weight: 700;
-    color: #334155;
-    margin-top: 3px;
-  }
-  #proAmountWordsBox {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: #f8fafc;
-    border-left: 3px solid #2563eb;
-    font-size: 12px;
-    font-weight: 700;
-    color: #1e293b;
-  }
-  #proSignatoryBox {
-    margin-top: 18px;
-    text-align: right;
-    font-size: 12px;
-    color: #1e293b;
-  }
-  .pro-sign-space {
-    display: inline-block;
-    min-width: 170px;
-    border-top: 1.5px solid #334155;
-    padding-top: 4px;
-    margin-top: 32px;
-    text-align: center;
-    font-weight: 700;
-  }
-
-  /* 3. Thermal 3-Inch (80mm) Receipt Mode */
-  body.thermal-pos-mode #invoicePreview,
-  body.thermal-pos-mode #printArea,
-  body.thermal-pos-mode .invoice-preview,
-  body.thermal-pos-mode .invoice-box {
-    max-width: 80mm !important;
-    width: 80mm !important;
-    margin: 0 auto !important;
-    padding: 4mm !important;
-    font-size: 11px !important;
-  }
-
-  /* 4. Clean Print & Center Watermark Rules */
-  #centerPrintWatermark { display: none; }
-
+  /* Professional Print Styling & Clean PDF Layout */
   @page {
-    size: auto;
+    size: A4;
     margin: 0mm !important;
   }
 
   @media print {
-    body { margin: 10mm !important; }
-    body.thermal-pos-mode { margin: 2mm !important; }
-    #proSuiteToolbar, .no-print-share-btn {
+    body {
+      margin: 10mm !important;
+      background: white !important;
+    }
+    .no-print-zone {
       display: none !important;
-      visibility: hidden !important;
     }
     #centerPrintWatermark.active-free-watermark {
       display: block !important;
@@ -1512,33 +1381,40 @@
       top: 48% !important;
       left: 50% !important;
       transform: translate(-50%, -50%) rotate(-35deg) !important;
-      font-size: 44px !important;
+      font-size: 46px !important;
       font-weight: 900 !important;
-      color: rgba(15, 23, 42, 0.10) !important;
-      border: 4px solid rgba(15, 23, 42, 0.10) !important;
-      padding: 10px 26px !important;
+      color: rgba(15, 23, 42, 0.09) !important;
+      border: 4px solid rgba(15, 23, 42, 0.09) !important;
+      padding: 10px 28px !important;
       border-radius: 12px !important;
       text-transform: uppercase !important;
       letter-spacing: 4px !important;
-      white-space: nowrap !important;
       pointer-events: none !important;
       z-index: 2147483647 !important;
+      font-family: Arial, sans-serif !important;
       text-align: center !important;
       -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
     #centerPrintWatermark.active-free-watermark span {
       display: block !important;
       font-size: 15px !important;
+      letter-spacing: 2px !important;
       margin-top: 4px !important;
+      font-weight: 700 !important;
     }
   }
 
-  /* 5. Floating Share Button */
-  .no-print-share-btn {
+  /* Floating Pro Actions Bar */
+  .pro-floating-toolbar {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 9999;
+    font-family: sans-serif;
+  }
+  .pro-action-btn {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
     border: none;
@@ -1551,19 +1427,169 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    z-index: 9999;
+    transition: transform 0.2s;
+  }
+  .pro-action-btn.whatsapp-btn {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+  }
+  .pro-action-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Professional Control Panel Box injected into UI */
+  .pro-control-panel {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    font-family: sans-serif;
+  }
+  .pro-control-panel h4 {
+    margin: 0 0 10px 0;
+    color: #1e293b;
+    font-size: 15px;
+  }
+  .pro-control-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .pro-control-grid label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #475569;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .pro-control-grid input, .pro-control-grid select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
   }
 </style>
 
-<!-- Floating Share App Button -->
-<button class="no-print-share-btn" onclick="shareGstApp()">
-  <span>📤</span> Share App
-</button>
+<!-- Floating Action Buttons Bar -->
+<div class="pro-floating-toolbar no-print-zone">
+  <button class="pro-action-btn whatsapp-btn" onclick="sendBillViaWhatsApp()">
+    <span>💬</span> Send WhatsApp
+  </button>
+  <button class="pro-action-btn" onclick="shareGstApp()">
+    <span>📤</span> Share App
+  </button>
+</div>
+
+<!-- Print Watermark Container -->
+<div id="centerPrintWatermark">
+  FREE VERSION<span>Unlock Pro (₹299) to Remove Watermark</span>
+</div>
 
 <script>
-(function() {
-  // --- Helper: Convert Number to Indian Rupees in Words ---
-  function numberToIndianWords(num) {
-    num = Math.round(Number(num) || 0);
+  // Comprehensive Professional Engine Injection
+  window.addEventListener('DOMContentLoaded', function() {
+    // 1. Inject Pro Control Panel into the interface
+    const container = document.querySelector('#invoice, .invoice-box, .container, main') || document.body;
+    const panel = document.createElement('div');
+    panel.className = 'pro-control-panel no-print-zone';
+    panel.innerHTML = `
+      <h4>⚡ Professional Tax & Billing Controls</h4>
+      <div class="pro-control-grid">
+        <div>
+          <label>Seller GSTIN (15 Digits)</label>
+          <input type="text" id="proSellerGstin" placeholder="e.g. 19AAAAA0000A1Z5" oninput="saveProSettings()">
+        </div>
+        <div>
+          <label>Buyer GSTIN (Optional)</label>
+          <input type="text" id="proBuyerGstin" placeholder="Customer GSTIN" oninput="saveProSettings()">
+        </div>
+        <div>
+          <label>Sale Type (Tax Mode)</label>
+          <select id="proSaleType" onchange="saveProSettings()">
+            <option value="intra">Intra-State (CGST + SGST)</option>
+            <option value="inter">Inter-State (100% IGST)</option>
+          </select>
+        </div>
+        <div>
+          <label>Printer Mode</label>
+          <select id="proPrinterMode" onchange="saveProSettings()">
+            <option value="a4">A4 Full Page Laser/Inkjet</option>
+            <option value="thermal">3-Inch POS Thermal Receipt</option>
+          </select>
+        </div>
+      </div>
+    `;
+    container.insertBefore(panel, container.firstChild);
+
+    // Load saved settings
+    if (localStorage.getItem('pro_seller_gstin')) document.getElementById('proSellerGstin').value = localStorage.getItem('pro_seller_gstin');
+    if (localStorage.getItem('pro_buyer_gstin')) document.getElementById('proBuyerGstin').value = localStorage.getItem('pro_buyer_gstin');
+    if (localStorage.getItem('pro_sale_type')) document.getElementById('proSaleType').value = localStorage.getItem('pro_sale_type');
+    if (localStorage.getItem('pro_printer_mode')) document.getElementById('proPrinterMode').value = localStorage.getItem('pro_printer_mode');
+
+    // Auto increment invoice number check & watermarking
+    checkProStatus();
+    setInterval(checkProStatus, 1500);
+  });
+
+  function saveProSettings() {
+    localStorage.setItem('pro_seller_gstin', document.getElementById('proSellerGstin').value);
+    localStorage.setItem('pro_buyer_gstin', document.getElementById('proBuyerGstin').value);
+    localStorage.setItem('pro_sale_type', document.getElementById('proSaleType').value);
+    localStorage.setItem('pro_printer_mode', document.getElementById('proPrinterMode').value);
+  }
+
+  function checkProStatus() {
+    const wm = document.getElementById('centerPrintWatermark');
+    if (!wm) return;
+
+    const isPro = (
+      localStorage.getItem('isPro') === 'true' ||
+      localStorage.getItem('gst_pro_unlocked') === 'true' ||
+      localStorage.getItem('proUnlocked') === 'true' ||
+      window.isPro === true ||
+      document.body.innerText.includes('Pro Unlocked') ||
+      document.body.innerText.includes('PRO ACTIVE')
+    );
+
+    if (isPro) {
+      wm.classList.remove('active-free-watermark');
+    } else {
+      wm.classList.add('active-free-watermark');
+    }
+  }
+
+  // 1-Click WhatsApp Bill Sender
+  function sendBillViaWhatsApp() {
+    const saleType = document.getElementById('proSaleType') ? document.getElementById('proSaleType').value : 'intra';
+    const sellerGstin = document.getElementById('proSellerGstin') ? document.getElementById('proSellerGstin').value : '';
+    
+    let text = "🛍️ *TAX INVOICE SUMMARY* \n";
+    if (sellerGstin) text += `GSTIN: ${sellerGstin}\n`;
+    text += `Type: ${saleType === 'inter' ? 'Inter-State (IGST)' : 'Intra-State (CGST/SGST)'}\n\n`;
+    text += "Thank you for your business! Please open the app or saved PDF for complete item breakdown.\n\n";
+    text += "🔗 Generated via GST Bill Maker: https://faruquerehan120-orhan.github.io/gst-bill-maker/";
+
+    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
+  }
+
+  // Share App Function
+  async function shareGstApp() {
+    const shareData = {
+      title: 'GST Invoice, Quotation & Bill Maker',
+      text: 'Create professional GST Invoices & Bills in seconds on mobile or PC! Try this app:',
+      url: 'https://faruquerehan120-orhan.github.io/gst-bill-maker/'
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch(e){}
+    } else {
+      navigator.clipboard.writeText(shareData.url);
+      alert('App link copied to clipboard!');
+    }
+  }
+</script>
+<!-- === PROFESSIONAL GST BILL MAKER MASTER UPGRADE END === -->
 </body>
 </html>
