@@ -1210,15 +1210,25 @@
       renderAll();
     });
   </script>
- <!-- === PRINT-ONLY CENTER WATERMARK & SHARE APP UPGRADE START === -->
+<!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE START === -->
 <style>
-  /* 1. Keep watermark completely hidden while editing on screen */
+  /* 1. Hide watermark on normal screen */
   #centerPrintWatermark {
     display: none;
   }
 
-  /* 2. Force diagonal watermark to show ONLY on Print / PDF for Free Version */
+  /* 2. Remove browser GitHub link (footer) and Date/Title (header) from PDF */
+  @page {
+    size: A4;
+    margin: 0mm !important;
+  }
+
   @media print {
+    body {
+      margin: 12mm !important; /* Keeps clean paper padding after removing browser headers/footers */
+    }
+
+    /* 3. Diagonal Center Watermark ONLY on Print/PDF for Free Version */
     #centerPrintWatermark.active-free-watermark {
       display: block !important;
       visibility: visible !important;
@@ -1229,7 +1239,7 @@
       transform: translate(-50%, -50%) rotate(-35deg) !important;
       font-size: 46px !important;
       font-weight: 900 !important;
-      color: rgba(15, 23, 42, 0.10) !important; /* Clear, professional diagonal stamp */
+      color: rgba(15, 23, 42, 0.10) !important;
       border: 4px solid rgba(15, 23, 42, 0.10) !important;
       padding: 10px 28px !important;
       border-radius: 12px !important;
@@ -1253,14 +1263,14 @@
       font-weight: 700 !important;
     }
 
-    /* Hide the Share button on print */
+    /* Hide Share button when printing */
     .no-print-share-btn {
       display: none !important;
       visibility: hidden !important;
     }
   }
 
-  /* 3. Floating Share App Button Styling */
+  /* 4. Floating Share App Button Styling */
   .no-print-share-btn {
     position: fixed;
     bottom: 20px;
@@ -1295,19 +1305,16 @@
 
 <script>
   function setupPrintWatermark() {
-    // 1. Create the watermark element if it doesn't exist yet
     let wm = document.getElementById('centerPrintWatermark');
     if (!wm) {
       wm = document.createElement('div');
       wm.id = 'centerPrintWatermark';
       wm.innerHTML = 'FREE VERSION<span>Unlock Pro to Remove Watermark</span>';
       
-      // Place it directly inside the printable invoice area so it is never hidden
       const printArea = document.querySelector('#invoicePreview, #printArea, .invoice-preview, .invoice-box, .print-area') || document.body;
       printArea.appendChild(wm);
     }
 
-    // 2. Check if the old bottom text watermark is visible (meaning user is on Free version)
     const isProUnlocked = (
       localStorage.getItem('isPro') === 'true' ||
       localStorage.getItem('gst_pro_unlocked') === 'true' ||
@@ -1328,7 +1335,6 @@
   window.addEventListener('beforeprint', setupPrintWatermark);
   setInterval(setupPrintWatermark, 1500);
 
-  // Universal Share Function
   async function shareGstApp() {
     const shareData = {
       title: 'GST Invoice, Quotation & Bill Maker',
@@ -1351,6 +1357,6 @@
     }
   }
 </script>
-<!-- === PRINT-ONLY CENTER WATERMARK & SHARE APP UPGRADE END === -->
+<!-- === PRINT-ONLY WATERMARK, CLEAN PDF & SHARE APP UPGRADE END === -->
 </body>
 </html>
