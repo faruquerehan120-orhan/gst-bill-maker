@@ -1210,5 +1210,120 @@
       renderAll();
     });
   </script>
+  <!-- === WATERMARK & SHARE APP UPGRADE START === -->
+<style>
+  /* 1. Diagonal Center Watermark Styling */
+  .invoice-watermark-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-size: 54px;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.06); /* Subtle professional grey */
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    white-space: nowrap;
+    pointer-events: none; /* Lets users click right through it */
+    user-select: none;
+    z-index: 10;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure watermark shows up clearly on Printed A4 / PDF */
+  @media print {
+    .invoice-watermark-overlay {
+      color: rgba(0, 0, 0, 0.07) !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+    }
+    .no-print-share-btn {
+      display: none !important;
+    }
+  }
+
+  /* 2. Floating Share App Button Styling */
+  .no-print-share-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+    font-family: sans-serif;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .no-print-share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+  }
+</style>
+
+<!-- Floating Share Button HTML -->
+<button class="no-print-share-btn" onclick="shareGstApp()">
+  <span>📤</span> Share App
+</button>
+
+<script>
+  // 1. Automatically attach the Watermark to the Invoice Box
+  window.addEventListener('DOMContentLoaded', function() {
+    // Finds your main invoice container or falls back to body
+    const invoiceContainer = document.querySelector('#invoice, .invoice-box, .invoice-container, .page, main') || document.body;
+    
+    if (invoiceContainer !== document.body) {
+      invoiceContainer.style.position = 'relative';
+    }
+
+    const watermark = document.createElement('div');
+    watermark.className = 'invoice-watermark-overlay';
+    watermark.id = 'dynamicWatermark';
+    
+    // Default watermark text (You can change this text to anything you want!)
+    watermark.innerText = 'TAX INVOICE';
+    
+    invoiceContainer.appendChild(watermark);
+  });
+
+  // 2. Universal Share Function (Works across WhatsApp, Telegram, Email, SMS, etc.)
+  async function shareGstApp() {
+    const shareData = {
+      title: 'GST Invoice, Quotation & Bill Maker',
+      text: 'Create professional GST Invoices, Quotations & Bills in seconds on mobile or PC! Try this app:',
+      url: 'https://faruquerehan120-orhan.github.io/gst-bill-maker/'
+    };
+
+    // Opens the native mobile/desktop Share Sheet (WhatsApp, Facebook, Email, Bluetooth, etc.)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log('Share canceled');
+      }
+    } else {
+      // Fallback for older laptops: Copies link and offers WhatsApp Web
+      navigator.clipboard.writeText(shareData.url);
+      const openWa = confirm('App link copied to clipboard!\n\nClick OK to share directly on WhatsApp, or Cancel to paste the link anywhere.');
+      if (openWa) {
+        window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareData.text + ' ' + shareData.url), '_blank');
+      }
+    }
+  }
+</script>
+<!-- === WATERMARK & SHARE APP UPGRADE END === -->
 </body>
 </html>
