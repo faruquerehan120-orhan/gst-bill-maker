@@ -20,8 +20,14 @@
     // 1) long UPI IDs wrap instead of being cut off (screen and print)
     '#prevUpiIdText{overflow-wrap:anywhere;word-break:break-all}' +
     'body.thermal-mode .qr-box{flex-direction:column !important;align-items:flex-start !important}' +
-    // receipt: keep Qty and Amount numbers on one line
-    'body.thermal-mode #printableArea td.text-right,body.thermal-mode #printableArea td.text-center,body.thermal-mode #printableArea th.text-right,body.thermal-mode #printableArea th.text-center{white-space:nowrap}';
+    // receipt: the table has only Item + Amount (quantity and price are in the small line under each item), so nothing is clipped
+    'body.thermal-mode #printableArea td.text-center,body.thermal-mode #printableArea th.text-center{display:none !important}' +
+    'body.thermal-mode #printableArea td.text-right,body.thermal-mode #printableArea th.text-right{white-space:nowrap}' +
+    'body.thermal-mode #printableArea .overflow-x-auto{overflow:visible !important}' +
+    'body.thermal-mode #printableArea table{width:100%}' +
+    // receipt: long totals wrap instead of running off the paper
+    'body.thermal-mode #printableArea .flex.justify-between{flex-wrap:wrap;column-gap:6px}' +
+    'body.thermal-mode #printableArea .border-t.pt-2{font-size:14px !important}';
 
   var st = document.createElement('style');
   st.id = 'printFixCss';
