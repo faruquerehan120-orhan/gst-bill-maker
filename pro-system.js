@@ -230,6 +230,22 @@
       '<button type="button" id="proRestoreBtn" onclick="restoreProLicense()" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-extrabold text-xs py-2.5 rounded-lg shadow transition">Restore Pro</button></div>';
   }
 
+  // ---------- "Share App" button: always share the Kaaj Tools address ----------
+  window.shareGstApp = async function () {
+    var shareData = {
+      title: 'GST Invoice, Quotation & Bill Maker',
+      text: 'Create professional GST Invoices, Quotations & Bills in seconds on mobile or PC! Try this app:',
+      url: 'https://kaajtools.in/gst-bill-maker/'
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (err) { /* share cancelled */ }
+    } else {
+      try { navigator.clipboard.writeText(shareData.url); } catch (e) {}
+      var openWa = confirm('App link copied to clipboard!\n\nClick OK to share directly on WhatsApp, or Cancel to paste the link anywhere.');
+      if (openWa) window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareData.text + ' ' + shareData.url), '_blank');
+    }
+  };
+
   buildModal();
   try { loadState(); renderAll(); } catch (e) { console.warn('Pro system start:', e); }
 })();
