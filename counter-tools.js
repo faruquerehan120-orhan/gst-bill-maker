@@ -2,6 +2,15 @@
    Adds: shop logo upload, auto invoice numbers + New Bill, recent bills with today's sales,
    better WhatsApp button, blank starting values for new users. */
 (function () {
+  // ---------- Catalog price fix: two items were priced per gram instead of per kg ----------
+  try {
+    var CATALOG_FIXES = { 'Assam CTC Tea Leaf': { unit: 'kg', price: 400 }, 'Fresh Paneer': { unit: 'kg', price: 350 } };
+    BUILTIN_CATALOG.forEach(function (it) {
+      var f = CATALOG_FIXES[it.name];
+      if (f) { it.unit = f.unit; it.price = f.price; }
+    });
+  } catch (e) {}
+
   function $(id) { return document.getElementById(id); }
   var STORE_KEY = 'gst_invoice_maker_state_v3';
 
