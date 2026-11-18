@@ -3,6 +3,19 @@
 (function () {
   function $(id) { return document.getElementById(id); }
 
+  // ---------- Rounding fix: CGST + SGST must add up exactly to the total GST ----------
+  var origCalc = window.calculateTotals;
+  if (typeof origCalc === 'function') {
+    window.calculateTotals = function () {
+      var t = origCalc.apply(this, arguments);
+      var cents = Math.round(t.totalGst * 100);
+      var cg = Math.ceil(cents / 2);
+      t.cgst = cg / 100;
+      t.sgst = (cents - cg) / 100;
+      return t;
+    };
+  }
+
   // ---------- Amount in words (Indian system: Thousand, Lakh, Crore) ----------
   var ONES = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven',
     'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -165,6 +178,8 @@
       igstRow.children[1].id = 'prevIgst';
       sgstRow.parentElement.insertBefore(igstRow, sgstRow.nextSibling);
     }
+    if (cgstRow.children[0]) cgstRow.children[0].textContent = 'CGST:';
+    if (sgstRow.children[0]) sgstRow.children[0].textContent = 'SGST:';
     cgstRow.style.display = igst ? 'none' : '';
     sgstRow.style.display = igst ? 'none' : '';
     igstRow.style.display = igst ? '' : 'none';
